@@ -14,12 +14,12 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
     void "test escribir una narracion"() {
     	given: "un escritor"
     		def usuario = new Usuario("Alice")
-    	when: "escriba una historia"
+    	when: "escriba una narracion"
     		def narracion = usuario.escribirNarracion("Cuento de Alice",
     			"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     			Narracion.Genero.TERROR,
     			50)
-    	then: "se le asigna esa historia"
+    	then: "se le asigna esa narracion"
     		narracion == usuario.narraciones.find { it.titulo == "Cuento de Alice" }
     }
 

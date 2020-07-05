@@ -20,6 +20,8 @@ class Narracion {
 	String titulo
 	String texto //Puedo necesitar que sea mas largo (ver mappings)
 	Long minimaReputacionParaCritica
+	Set<Comentario> comentarios = []
+	Set<Critica> criticas = []
 
 	static belongsTo = [escritor: Usuario]
 	static hasMany = [
@@ -32,7 +34,7 @@ class Narracion {
     Narracion(Usuario escritor,
     	String titulo, 
     	String texto, 
-    	Narracion.Genero genero, 
+    	Genero genero,
     	Long minimaReputacionParaCritica = 0) {
 
     	this.escritor = escritor
@@ -43,4 +45,8 @@ class Narracion {
 		this.popularidad = 0
 		this.cantMeGusta = 0
     }
+
+	void agregarComentario(Comentario comentario) {
+		comentarios << comentario
+	}
 }
