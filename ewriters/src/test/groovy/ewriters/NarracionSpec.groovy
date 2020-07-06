@@ -30,6 +30,25 @@ class NarracionSpec extends Specification implements DomainUnitTest<Narracion> {
             narracion.agregarComentario(comentario)
         then: "el comentario se agrega correctamente"
             narracion.comentarios.contains(comentario)
+    }
 
+    void "test crear comentario sin reputacion suficiente"() {
+        given: "una narracion y un lector sin suficiente reputacion"
+            def narracion = new Narracion(
+                    escritor,
+                    "Narracion de Alice",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Narracion.Genero.CIENCIA_FICCION,
+                    60
+            )
+            def lector = new Usuario("Bob")
+            lector.reputacion = 40
+        when: "el lector comente la narracion"
+            def comentario = new Comentario(lector, "Comentario de Bob")
+            narracion.agregarComentario(comentario)
+        then: "no podra comentar y no se agregara el comentario"
+            false == narracion.comentarios.contains(comentario)
+            def exception = thrown(IllegalStateException)
+            exception != null 
     }
 }

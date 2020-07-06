@@ -4,7 +4,8 @@ class Usuario {
 
 	String nombreApellido
 	Long reputacion
-	Set narraciones = []
+	Set<Narracion> narraciones = []
+    Set<Narracion> narracionesConMeGusta = [] 
 
 	static hasMany = [narraciones: Narracion]
 
@@ -32,5 +33,23 @@ class Usuario {
 
     void participarEnConcurso(Narracion narracion, Concurso concurso) {
         concurso.registrarParticipacion(narracion)
+    }
+
+    void meGusta(Narracion narracion) {
+        if (!narracionesConMeGusta.contains(narracion)) {
+            narracionesConMeGusta << narracion
+            narracion.agregarMeGusta()
+        } else {
+            throw new IllegalStateException("Ya se indico me gusta en esta narracion")
+        }
+    }
+
+    void removerMeGusta(Narracion narracion) {
+        if (narracionesConMeGusta.contains(narracion)) {
+            narracionesConMeGusta.removeElement(narracion)
+            narracion.removerMeGusta()
+        } else {
+            throw new IllegalStateException("No se indico me gusta previamente en esta narracion")
+        }
     }
 }

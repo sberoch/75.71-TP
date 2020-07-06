@@ -47,6 +47,21 @@ class Narracion {
     }
 
 	void agregarComentario(Comentario comentario) {
-		comentarios << comentario
+		if (comentario.escritor.reputacion >= minimaReputacionParaCritica) {
+			comentarios << comentario
+			popularidad++
+		} else {
+			throw new IllegalStateException("No se tiene reputacion suficiente para comentar")
+		} 
+	}
+
+	void agregarMeGusta() {
+		cantMeGusta++
+		popularidad++
+	}
+
+	void removerMeGusta() {
+		cantMeGusta--
+		popularidad--
 	}
 }
