@@ -10,27 +10,33 @@ class Concurso {
 	Narracion.Genero genero
 	Set<Narracion> narraciones = []
 	LocalDateTime fechaCreacion
-	Usuario escritor
+	Usuario creador
+    Narracion narracionGanadora
 
 	static hasMany = [narraciones: Narracion]
-	static belongsTo = [escritor: Usuario]
+	static belongsTo = [creador: Usuario]
     static constraints = {
     }
 
-    Concurso(Usuario escritor, 
+    Concurso(Usuario creador, 
     	String titulo,	
     	String descripcion,	
     	Long recompensa, 
     	Long minimaReputacionParaParticipar, 
     	Narracion.Genero genero) {
 
-    	this.escritor = escritor
+    	this.creador = creador
     	this.titulo = titulo 
 		this.descripcion = descripcion 
 		this.recompensa = recompensa 
 		this.minimaReputacionParaParticipar = minimaReputacionParaParticipar 
 		this.genero = genero
 		this.fechaCreacion = LocalDateTime.now()
+    }
+
+    void comenzar() {
+        def fechaFinalizacion = Date.from(this.fechaCreacion.plusDays(7).atZone(ZoneId.systemDefault()).toInstant())
+        DeterminarGanadorConcursoJob.schedule(fechaFinalizacion, [concurso: this])
     }
 
     void registrarParticipacion(Narracion narracion) {
@@ -43,9 +49,11 @@ class Concurso {
     	}
     }
 
-    //TODO: cambiar para ya asignar los premios al ganador desde aca
-    Narracion determinarGanador() {
-        return narraciones.max()
+    void finalizar() {
+        if (!this.narraciones.isEmpty()) {
+            this.narracionGanadora = this.narraciones.max()
+            this.narracionGanadora.escritor.ganarConcurso(recompensa)
+        }
     }
 
     boolean terminado() {

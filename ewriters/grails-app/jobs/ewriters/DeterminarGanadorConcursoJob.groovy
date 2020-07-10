@@ -2,7 +2,9 @@ package ewriters
 
 class DeterminarGanadorConcursoJob {
 
-    def execute() {
-        //Obtener el concurso y ejecutar concurso.terminar()
+    def execute(context) {
+        def concurso = context.mergedJobDataMap.get('concurso')
+        concurso.finalizar()
+        println "Termino el concurso de " + concurso.creador.nombreApellido
     }
 }

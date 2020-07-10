@@ -53,4 +53,8 @@ class Usuario {
             throw new IllegalStateException("No se indico me gusta previamente en esta narracion")
         }
     }
+
+    void ganarConcurso(Long recompensa) {
+        this.reputacion += recompensa
+    }
 }

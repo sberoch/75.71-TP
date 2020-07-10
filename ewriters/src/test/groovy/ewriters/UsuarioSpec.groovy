@@ -34,7 +34,7 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
     			50,
     			Narracion.Genero.NO_FICCION)
     	then: "se le asigna ese concurso"
-    		usuario == concurso.escritor
+    		usuario == concurso.creador
     }
 
     void "test indicar me gusta en una historia exitosamente"() {
@@ -49,8 +49,8 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
             def lector = new Usuario("Bob")
         when: "el lector indique que le gusta la narracion"
             lector.meGusta(narracion)
-            narracion.cantMeGusta == 1
         then: "se agregara el me gusta correctamente"
+            narracion.cantMeGusta == 1
             lector.narracionesConMeGusta.contains(narracion)
     }
 
@@ -107,5 +107,27 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
         	narracion.cantMeGusta == 0
         	def exception = thrown(IllegalStateException)
             exception != null
+    }
+
+    void "test ganar un concurso le otorga premios al usuario ganador"() {
+        given: "un concurso, un escritor y su narracion"
+            def recompensaPorGanarElConcurso = 200
+            def concurso = new Concurso(new Usuario("Alice"),
+                "Concurso de Alice",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                recompensaPorGanarElConcurso,
+                0,
+                Narracion.Genero.FANTASIA)
+            def participante = new Usuario("Bob")
+            def narracion = new Narracion(participante,
+                "Narracion de Bob",
+                "Lorem ipsum dolor sit amet",
+                Narracion.Genero.FANTASIA)
+            participante.participarEnConcurso(narracion, concurso)
+            def reputacionPrevia = participante.reputacion
+        when: "el escritor gane el concurso"
+            concurso.finalizar()
+        then: "el escritor aumento su reputacion"
+            participante.reputacion == reputacionPrevia + recompensaPorGanarElConcurso
     }
 }

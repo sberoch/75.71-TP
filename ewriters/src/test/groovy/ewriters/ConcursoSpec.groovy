@@ -90,8 +90,8 @@ class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
             narracion_1.cantMeGusta = 3
             narracion_2.cantMeGusta = 5
         when: "se determine el ganador"
-            def narracionGanadora = concurso.determinarGanador()
+            concurso.finalizar()
         then: "ganara la narracion con mas me gusta"
-            narracionGanadora == narracion_2
+            concurso.narracionGanadora == narracion_2
     }
 }
