@@ -55,4 +55,43 @@ class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
         	def exception = thrown(IllegalStateException)
         	exception != null 
     }
+
+    void "test el concurso dura una semana"() {
+        given: "un concurso"
+            def concurso = new Concurso(creadorDelConcurso,
+                "Concurso de Alice",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                200,
+                50,
+                Narracion.Genero.FANTASIA)
+        expect: "el concurso no termino si paso menos de una semana"
+            !concurso.terminado()
+
+    }
+
+    void "test la narracion con mas me gusta gana el concurso"() {
+        given: "un concurso y dos narraciones con diferente cantidad de me gusta"
+            def concurso = new Concurso(creadorDelConcurso,
+                "Concurso de Alice",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                200,
+                0,
+                Narracion.Genero.FANTASIA)
+            def narracion_1 = new Narracion(new Usuario("Bob"),
+                "Narracion de Bob",
+                "Lorem ipsum dolor sit amet",
+                Narracion.Genero.FANTASIA)
+            def narracion_2 = new Narracion(new Usuario("Charlie"),
+                "Narracion de Charlie",
+                "Lorem ipsum dolor sit amet",
+                Narracion.Genero.FANTASIA)
+            concurso.registrarParticipacion(narracion_1)
+            concurso.registrarParticipacion(narracion_2)
+            narracion_1.cantMeGusta = 3
+            narracion_2.cantMeGusta = 5
+        when: "se determine el ganador"
+            def narracionGanadora = concurso.determinarGanador()
+        then: "ganara la narracion con mas me gusta"
+            narracionGanadora == narracion_2
+    }
 }

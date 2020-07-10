@@ -1,6 +1,6 @@
 package ewriters
 
-class Narracion {
+class Narracion implements Comparable {
 
 	enum Genero {
 		TERROR,
@@ -16,7 +16,7 @@ class Narracion {
 	Usuario escritor
 	Genero genero
 	Long popularidad
-	Long cantMeGusta //Sirve modelarlo asi para poder diferenciar usuarios?
+	Long cantMeGusta
 	String titulo
 	String texto //Puedo necesitar que sea mas largo (ver mappings)
 	Long minimaReputacionParaCritica
@@ -44,6 +44,10 @@ class Narracion {
 		this.minimaReputacionParaCritica = minimaReputacionParaCritica
 		this.popularidad = 0
 		this.cantMeGusta = 0
+    }
+
+    int compareTo(other) {
+    	return this.cantMeGusta <=> other.cantMeGusta
     }
 
 	void agregarComentario(Comentario comentario) {

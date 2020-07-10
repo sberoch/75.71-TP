@@ -42,4 +42,13 @@ class Concurso {
     		narraciones << narracion
     	}
     }
+
+    //TODO: cambiar para ya asignar los premios al ganador desde aca
+    Narracion determinarGanador() {
+        return narraciones.max()
+    }
+
+    boolean terminado() {
+        return fechaCreacion.plusDays(7) < LocalDateTime.now()
+    }
 }

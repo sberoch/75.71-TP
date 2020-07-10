@@ -4,6 +4,7 @@ class Usuario {
 
 	String nombreApellido
 	Long reputacion
+    Long creditos
 	Set<Narracion> narraciones = []
     Set<Narracion> narracionesConMeGusta = [] 
 
