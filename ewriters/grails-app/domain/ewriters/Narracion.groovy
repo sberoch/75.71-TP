@@ -29,6 +29,11 @@ class Narracion implements Comparable {
 		criticas: Critica
 	]
     static constraints = {
+    	escritor nullable: false
+    	genero nullable: false
+    	titulo blank: false
+    	texto blank: false
+    	minimaReputacionParaCritica blank: false
     }
 
     Narracion(Usuario escritor,

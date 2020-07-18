@@ -13,6 +13,7 @@ class Usuario {
     ]
 
     static constraints = {
+        nombreApellido blank: false
     }
 
     Usuario(String nombreApellido) {

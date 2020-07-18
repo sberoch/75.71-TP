@@ -8,5 +8,6 @@ class Critica {
 
 	static belongsTo = [escritor: Usuario]
     static constraints = {
+    	texto blank: false
     }
 }

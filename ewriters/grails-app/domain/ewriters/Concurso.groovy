@@ -15,6 +15,12 @@ class Concurso {
 	static hasMany = [narraciones: Narracion]
 	static belongsTo = [creador: Usuario]
     static constraints = {
+        titulo blank: false
+        descripcion blank: false
+        recompensa blank: false
+        minimaReputacionParaParticipar blank: false
+        genero blank: false
+        creador nullable: false
     }
 
     Concurso(Usuario creador, 

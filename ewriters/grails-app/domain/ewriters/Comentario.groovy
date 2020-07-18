@@ -7,6 +7,8 @@ class Comentario {
 
 	static belongsTo = [escritor: Usuario]
     static constraints = {
+    	texto blank: false
+    	escritor nullable: false
     }
 
     Comentario(Usuario escritor, String texto) {
