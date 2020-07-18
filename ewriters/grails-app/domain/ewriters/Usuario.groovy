@@ -4,11 +4,13 @@ class Usuario {
 
 	String nombreApellido
 	Long reputacion
-    Long creditos
 	Set<Narracion> narraciones = []
     Set<Narracion> narracionesConMeGusta = [] 
 
-	static hasMany = [narraciones: Narracion]
+	static hasMany = [
+        narraciones: Narracion,
+        narracionesConMeGusta: Narracion
+    ]
 
     static constraints = {
     }
@@ -16,6 +18,10 @@ class Usuario {
     Usuario(String nombreApellido) {
     	this.nombreApellido = nombreApellido
 		this.reputacion = 0
+    }
+
+    String toString() {
+        return nombreApellido
     }
 
     Narracion escribirNarracion(String titulo, String texto, Narracion.Genero genero, Long minimaReputacionParaCritica) {

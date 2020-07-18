@@ -11,7 +11,6 @@ class Concurso {
 	Set<Narracion> narraciones = []
 	LocalDateTime fechaCreacion
 	Usuario creador
-    Narracion narracionGanadora
 
 	static hasMany = [narraciones: Narracion]
 	static belongsTo = [creador: Usuario]
@@ -34,6 +33,10 @@ class Concurso {
 		this.fechaCreacion = LocalDateTime.now()
     }
 
+    String toString() {
+        return titulo
+    }
+
     void comenzar() {
         def fechaFinalizacion = Date.from(this.fechaCreacion.plusDays(7).atZone(ZoneId.systemDefault()).toInstant())
         DeterminarGanadorConcursoJob.schedule(fechaFinalizacion, [concurso: this])
@@ -51,8 +54,7 @@ class Concurso {
 
     void finalizar() {
         if (!this.narraciones.isEmpty()) {
-            this.narracionGanadora = this.narraciones.max()
-            this.narracionGanadora.escritor.ganarConcurso(recompensa)
+            this.narraciones.max().escritor.ganarConcurso(recompensa)
         }
     }
 

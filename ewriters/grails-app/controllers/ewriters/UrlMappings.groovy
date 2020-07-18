@@ -9,7 +9,8 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(controller:"narracion")
+        "/narraciones"(resources: "narracion")
         "500"(view:'/error')
         "404"(view:'/notFound')
     }

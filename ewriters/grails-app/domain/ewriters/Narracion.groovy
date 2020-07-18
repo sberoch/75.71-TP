@@ -46,6 +46,10 @@ class Narracion implements Comparable {
 		this.cantMeGusta = 0
     }
 
+    String toString() {
+    	return titulo
+    }
+
     int compareTo(other) {
     	return this.cantMeGusta <=> other.cantMeGusta
     }
