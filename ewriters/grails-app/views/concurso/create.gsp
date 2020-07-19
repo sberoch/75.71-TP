@@ -25,9 +25,14 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.concurso}" method="POST">
+            <g:form action="save">
                 <fieldset class="form">
-                    <f:all bean="concurso"/>
+                    <f:field bean="concurso" property="creador"/>
+                    <f:field bean="concurso" property="titulo"/>
+                    <f:field bean="concurso" property="descripcion"/>
+                    <f:field bean="concurso" property="genero"/>
+                    <f:field bean="concurso" property="recompensa"/>
+                    <f:field bean="concurso" property="minimaReputacionParaParticipar"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

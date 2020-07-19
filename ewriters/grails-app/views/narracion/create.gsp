@@ -25,9 +25,13 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.narracion}" method="POST">
+            <g:form action="save">
                 <fieldset class="form">
-                    <f:all bean="narracion"/>
+                    <f:field bean="narracion" property="escritor"/>
+                    <f:field bean="narracion" property="titulo"/>
+                    <f:field bean="narracion" property="texto"/>
+                    <f:field bean="narracion" property="genero"/>
+                    <f:field bean="narracion" property="minimaReputacionParaCritica"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

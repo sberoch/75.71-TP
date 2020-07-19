@@ -23,6 +23,8 @@ class NarracionController {
     }
 
     def save(Narracion narracion) {
+        narracion.popularidad = 0
+        narracion.cantMeGusta = 0
         if (narracion == null) {
             notFound()
             return

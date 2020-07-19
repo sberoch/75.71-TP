@@ -44,7 +44,8 @@ class Concurso {
     }
 
     void comenzar() {
-        def fechaFinalizacion = Date.from(this.fechaCreacion.plusDays(7).atZone(ZoneId.systemDefault()).toInstant())
+        println("Comenzo un concurso!")
+        def fechaFinalizacion = Date.from(this.fechaCreacion.plusSeconds(7).atZone(ZoneId.systemDefault()).toInstant())
         DeterminarGanadorConcursoJob.schedule(fechaFinalizacion, [concurso: this])
     }
 
@@ -59,6 +60,7 @@ class Concurso {
     }
 
     void finalizar() {
+        println("Termino un concurso!")
         if (!this.narraciones.isEmpty()) {
             this.narraciones.max().escritor.ganarConcurso(recompensa)
         }

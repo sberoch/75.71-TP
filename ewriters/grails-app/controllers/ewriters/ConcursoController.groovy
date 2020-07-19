@@ -2,6 +2,7 @@ package ewriters
 
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
+import java.time.*
 
 class ConcursoController {
 
@@ -23,6 +24,7 @@ class ConcursoController {
     }
 
     def save(Concurso concurso) {
+        concurso.fechaCreacion = LocalDateTime.now()
         if (concurso == null) {
             notFound()
             return
@@ -34,6 +36,8 @@ class ConcursoController {
             respond concurso.errors, view:'create'
             return
         }
+
+        concurso.comenzar()
 
         request.withFormat {
             form multipartForm {
