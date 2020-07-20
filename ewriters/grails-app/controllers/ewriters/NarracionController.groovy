@@ -15,11 +15,19 @@ class NarracionController {
     }
 
     def show(Long id) {
-        respond narracionService.get(id)
+        Narracion narracion = narracionService.get(id)
+        println(narracion.cantMeGusta)
+        respond narracion
     }
 
     def create() {
         respond new Narracion(params)
+    }
+
+    def darMeGusta(Long id) {
+        Narracion narracion = narracionService.get(id)
+        narracionService.darMeGusta(narracion)
+        render(view: "show", model: [narracion: narracion])
     }
 
     def save(Narracion narracion) {

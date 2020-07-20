@@ -36,3 +36,5 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
 }
 root(ERROR, ['STDOUT'])
 logger('demo', INFO, ['STDOUT'], false)
+
+

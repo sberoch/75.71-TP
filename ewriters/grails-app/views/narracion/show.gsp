@@ -22,6 +22,7 @@
             <f:display bean="narracion" />
             <g:form resource="${this.narracion}" method="DELETE">
                 <fieldset class="buttons">
+                    <g:link action="darMeGusta" params="${[id: this.narracion?.id]}"><g:message code="ewriters.narracion.megusta" default="Me Gusta" /></g:link>
                     <g:link class="edit" action="edit" resource="${this.narracion}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
                 </fieldset>

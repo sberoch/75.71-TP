@@ -1,9 +1,9 @@
 package ewriters
 
 import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
-@Service(Narracion)
-interface NarracionService {
+interface INarracionService {
 
     Narracion get(Serializable id)
 
@@ -14,5 +14,23 @@ interface NarracionService {
     void delete(Serializable id)
 
     Narracion save(Narracion narracion)
+
+}
+
+@Service(Narracion)
+abstract class NarracionService implements INarracionService {
+
+	@Transactional
+	void darMeGusta(Narracion narracion) {
+		def usuario = new Usuario("Bobb")
+		narracion.agregarMeGusta()
+		narracion.validate()
+		if (narracion.hasErrors()) {
+			narracion.errors.allErrors.each {
+				println it
+			}
+		}
+		narracion.save(flush:true, failOnError: true)
+	}
 
 }
