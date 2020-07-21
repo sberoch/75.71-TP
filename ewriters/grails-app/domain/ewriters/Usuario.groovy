@@ -3,13 +3,12 @@ package ewriters
 class Usuario {
 
 	String nombreApellido
-	Long reputacion
-	Set<Narracion> narraciones = []
-    Set<Narracion> narracionesConMeGusta = [] 
+	Long reputacion 
 
 	static hasMany = [
         narraciones: Narracion,
-        narracionesConMeGusta: Narracion
+        narracionesConMeGusta: Narracion,
+        comentarios: Comentario
     ]
 
     static constraints = {

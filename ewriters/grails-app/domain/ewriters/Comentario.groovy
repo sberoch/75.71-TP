@@ -3,16 +3,17 @@ package ewriters
 class Comentario {
 
 	String texto
-    Usuario escritor
 
-	static belongsTo = [escritor: Usuario]
+	static belongsTo = [escritor: Usuario, narracion: Narracion]
     static constraints = {
     	texto blank: false
-    	escritor nullable: false
     }
 
-    Comentario(Usuario escritor, String texto) {
-        this.escritor = escritor
+    Comentario(String texto) {
         this.texto = texto
+    }
+
+    String toString() {
+        return texto
     }
 }

@@ -30,6 +30,11 @@ class NarracionController {
         render(view: "show", model: [narracion: narracion])
     }
 
+    def comentar(Comentario comentario, Long id) {
+        narracionService.agregarComentario(comentario, id)
+        render(view: "index")
+    }
+
     def save(Narracion narracion) {
         narracion.popularidad = 0
         narracion.cantMeGusta = 0

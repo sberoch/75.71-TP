@@ -7,8 +7,6 @@ interface INarracionService {
 
     Narracion get(Serializable id)
 
-    List<Narracion> list(Map args)
-
     Long count()
 
     void delete(Serializable id)
@@ -21,16 +19,22 @@ interface INarracionService {
 abstract class NarracionService implements INarracionService {
 
 	@Transactional
-	void darMeGusta(Narracion narracion) {
-		def usuario = new Usuario("Bobb")
+	List<Narracion> list(Map args) {
+		return Narracion.findAllByPublica(true)
+	}
+
+	@Transactional
+	def darMeGusta(Narracion narracion) {
 		narracion.agregarMeGusta()
-		narracion.validate()
-		if (narracion.hasErrors()) {
-			narracion.errors.allErrors.each {
-				println it
-			}
-		}
 		narracion.save(flush:true, failOnError: true)
+	}
+
+	@Transactional
+	def agregarComentario(Comentario comentario, Long narracionId) {
+		def narracion = Narracion.get(narracionId)
+		narracion.addToComentarios(comentario)
+		narracion.save(flush:true, failOnError: true)
+		comentario.save(flush:true, failOnError: true)
 	}
 
 }

@@ -13,15 +13,13 @@ class Narracion implements Comparable {
 		HUMOR
 	}
 
-	Usuario escritor
 	Genero genero
 	Long popularidad
 	Long cantMeGusta
 	String titulo
 	String texto //Puedo necesitar que sea mas largo (ver mappings)
 	Long minimaReputacionParaCritica
-	Set<Comentario> comentarios = []
-	Set<Critica> criticas = []
+	Boolean publica
 
 	static belongsTo = [escritor: Usuario]
 	static hasMany = [
@@ -29,24 +27,23 @@ class Narracion implements Comparable {
 		criticas: Critica
 	]
     static constraints = {
-    	escritor nullable: false
     	genero nullable: false
     	titulo blank: false
     	texto blank: false
     	minimaReputacionParaCritica blank: false
     }
 
-    Narracion(Usuario escritor,
-    	String titulo, 
+    Narracion(String titulo, 
     	String texto, 
     	Genero genero,
-    	Long minimaReputacionParaCritica = 0) {
+    	Long minimaReputacionParaCritica = 0,
+    	Boolean publica = true) {
 
-    	this.escritor = escritor
     	this.titulo = titulo
 		this.texto = texto
 		this.genero = genero
 		this.minimaReputacionParaCritica = minimaReputacionParaCritica
+		this.publica = publica
 		this.popularidad = 0
 		this.cantMeGusta = 0
     }

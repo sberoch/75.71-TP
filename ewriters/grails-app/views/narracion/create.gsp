@@ -32,6 +32,8 @@
                     <f:field bean="narracion" property="texto"/>
                     <f:field bean="narracion" property="genero"/>
                     <f:field bean="narracion" property="minimaReputacionParaCritica"/>
+                    <f:field bean="narracion" property="popularidad"/>
+                    <f:field bean="narracion" property="cantMeGusta"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
