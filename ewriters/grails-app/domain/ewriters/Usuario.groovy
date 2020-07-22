@@ -6,6 +6,7 @@ class Usuario {
 	Long reputacion 
 
 	static hasMany = [
+        concursos: Concurso,
         narraciones: Narracion,
         narracionesConMeGusta: Narracion,
         comentarios: Comentario

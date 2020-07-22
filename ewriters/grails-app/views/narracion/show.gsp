@@ -19,7 +19,7 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="narracion" />
+            <f:display bean="narracion" except="['minimaReputacionParaCritica', 'popularidad', 'comentarios', 'criticas', 'publica']"/>
             <g:form resource="${this.narracion}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.narracion}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
@@ -28,13 +28,11 @@
             </g:form>
             <g:form action="comentar">
                 <fieldset class="form">
-                    <p>Agregar un comentario</p><g:field name="texto" type="text"/>
-                </fieldset>
-                <fieldset class="buttons">
+                    <g:field name="texto" type="text" value="Agregar un comentario"/>
                     <input type="submit" formaction="/narracion/comentar?id=${this.narracion?.id}" value="Enviar"/>
                 </fieldset>
             </g:form>
-            <f:table collection="${this.narracion.comentarios}" except=""/>
+            <f:table collection="${this.narracion.comentarios}" properties="escritor, texto"/>
         </div>
     </body>
 </html>

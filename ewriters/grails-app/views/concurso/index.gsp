@@ -18,7 +18,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${concursoList}" />
+            <f:table collection="${concursoList}" properties="titulo, descripcion, recompensa, minimaReputacionParaParticipar, genero, creador"/>
 
             <div class="pagination">
                 <g:paginate total="${concursoCount ?: 0}" />

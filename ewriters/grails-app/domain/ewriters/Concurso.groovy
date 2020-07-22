@@ -8,7 +8,6 @@ class Concurso {
 	Long recompensa
 	Long minimaReputacionParaParticipar
 	Narracion.Genero genero
-	Set<Narracion> narraciones = []
 	LocalDateTime fechaCreacion
 	Usuario creador
 
@@ -45,7 +44,7 @@ class Concurso {
 
     void comenzar() {
         println("Comenzo un concurso!")
-        def fechaFinalizacion = Date.from(this.fechaCreacion.plusSeconds(7).atZone(ZoneId.systemDefault()).toInstant())
+        def fechaFinalizacion = Date.from(this.fechaCreacion.plusDays(7).atZone(ZoneId.systemDefault()).toInstant())
         DeterminarGanadorConcursoJob.schedule(fechaFinalizacion, [concurso: this])
     }
 

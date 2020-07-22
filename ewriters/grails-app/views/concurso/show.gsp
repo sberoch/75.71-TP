@@ -19,7 +19,8 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="concurso" />
+            <f:display bean="concurso" except="['narraciones', 'fechaCreacion']"/>
+            <f:table collection="${this.concurso?.narraciones}" properties="titulo, texto, genero, escritor, cantMeGusta"/>
             <g:form resource="${this.concurso}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.concurso}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
