@@ -14,6 +14,13 @@ class NarracionController {
         respond narracionService.list(params), model:[narracionCount: narracionService.count()]
     }
 
+    def search() {
+        List<Narracion> results = narracionService.search(params)
+        render(view: "index", model: [
+            narracionList: results,
+            narracionCount: results.size()])
+    }
+
     def show(Long id) {
         Narracion narracion = narracionService.get(id)
         println(narracion.cantMeGusta)

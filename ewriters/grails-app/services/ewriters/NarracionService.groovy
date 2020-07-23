@@ -20,7 +20,15 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	List<Narracion> list(Map args) {
+		//TODO: paginar
 		return Narracion.findAllByPublica(true, [sort: "popularidad", order: "desc"])
+	}
+
+	@Transactional
+	List<Narracion> search(Map args) {
+		//Devuelve todas las narraciones con args.query en alguna parte del titulo 
+		String query = "%" + args.query + "%"
+		return Narracion.findAllByTituloIlike(query)
 	}
 
 	@Transactional
