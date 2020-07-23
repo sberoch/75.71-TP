@@ -20,7 +20,7 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	List<Narracion> list(Map args) {
-		return Narracion.findAllByPublica(true)
+		return Narracion.findAllByPublica(true, [sort: "popularidad", order: "desc"])
 	}
 
 	@Transactional

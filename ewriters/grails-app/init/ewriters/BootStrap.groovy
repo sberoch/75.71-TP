@@ -9,16 +9,26 @@ class BootStrap {
         Narracion narracion = new Narracion(
             "Narracion de Bob",
             "Texto de la narracion",
-            Narracion.Genero.NO_FICCION
+            Narracion.Genero.NO_FICCION,
+            30
         )
 
         Narracion narracion2 = new Narracion(
             "Narracion 2 de Bob",
             "Texto de la narracion 2",
             Narracion.Genero.NO_FICCION,
-            0,
-            false
+            0
         )
+
+        Narracion narracion3 = new Narracion(
+            "Narracion 3 de Bob",
+            "Texto de la narracion 3",
+            Narracion.Genero.NO_FICCION
+        )
+
+        narracion.popularidad = 10
+        narracion2.popularidad = 30
+        narracion3.popularidad = 20
 
         Comentario comentario = new Comentario("Comentario de bob!")
 
@@ -31,6 +41,7 @@ class BootStrap {
 
         usuario.addToNarraciones(narracion)
         usuario.addToNarraciones(narracion2)
+        usuario.addToNarraciones(narracion3)
         usuario.addToComentarios(comentario)
         narracion.addToComentarios(comentario)
         usuario.addToConcursos(concurso)
@@ -39,6 +50,7 @@ class BootStrap {
         usuario.save(failOnError: true)
         narracion.save(failOnError: true)
         narracion2.save(failOnError: true)
+        narracion3.save(failOnError: true)
         comentario.save(failOnError: true)
         concurso.save(failOnError: true)
 
