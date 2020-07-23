@@ -25,7 +25,8 @@ class NarracionController {
     def show(Long id) {
         render(view: "show", model: [
             narracion: narracionService.get(id), 
-            comentarios: narracionService.listarComentarios(id)
+            comentarios: narracionService.listarComentarios(id),
+            meGustaCount: narracionService.contarMeGusta(id)
         ])
     }
 
@@ -33,10 +34,9 @@ class NarracionController {
         respond new Narracion(params)
     }
 
-    def darMeGusta(Long id) {
-        Narracion narracion = narracionService.get(id)
-        narracionService.darMeGusta(narracion)
-        render(view: "show", model: [narracion: narracion])
+    def meGusta(Long id) {
+        narracionService.meGusta(id)
+        redirect action: "show", id: id
     }
 
     def comentar(String texto, Long id) {

@@ -32,28 +32,46 @@ abstract class NarracionService implements INarracionService {
 	}
 
 	@Transactional
-	def darMeGusta(Narracion narracion) {
+	def meGusta(Long id) {
+		//TODO: obtener el usuario logueado
+		def usuario = new Usuario("Hardcodeado")
+		def narracion = Narracion.get(id)
+		MeGusta meGusta = new MeGusta()
+
+		//TODO: verificar que pueda
 		narracion.agregarMeGusta()
-		narracion.save(flush:true, failOnError: true)
+
+		usuario.addToMeGusta(meGusta)
+		narracion.addToMeGusta(meGusta)
+
+		usuario.save(flush: true, failOnError: true)
+		narracion.save(flush: true, failOnError: true)
+		meGusta.save(flush: true, failOnError: true)
 	}
 
 	@Transactional
 	def agregarComentario(Comentario comentario, Long narracionId) {
 		//TODO: obtener el usuario logueado
 		def usuario = new Usuario("Hardcodeado")
-		usuario.addToComentarios(comentario)
-
 		def narracion = Narracion.get(narracionId)
+
+		//TODO: comportamientos del dominio
+		usuario.addToComentarios(comentario)
 		narracion.addToComentarios(comentario)
 
 		usuario.save(flush: true, failOnError: true)
-		narracion.save(flush:true, failOnError: true)
-		comentario.save(flush:true, failOnError: true)
+		narracion.save(flush: true, failOnError: true)
+		comentario.save(flush: true, failOnError: true)
 	}
 
 	@Transactional
 	List<Comentario> listarComentarios(Long narracionId) {
 		return Comentario.findAllByNarracion(Narracion.get(narracionId))
+	}
+
+	@Transactional
+	Long contarMeGusta(Long id) {
+		return MeGusta.findAllByNarracion(Narracion.get(id)).size()
 	}
 
 }

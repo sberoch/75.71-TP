@@ -26,10 +26,6 @@ class BootStrap {
             Narracion.Genero.NO_FICCION
         )
 
-        narracion.popularidad = 10
-        narracion2.popularidad = 30
-        narracion3.popularidad = 20
-
         Comentario comentario = new Comentario("Comentario de bob!")
 
         Concurso concurso = new Concurso(usuario,

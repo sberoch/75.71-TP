@@ -24,7 +24,8 @@ class Narracion implements Comparable {
 	static belongsTo = [escritor: Usuario]
 	static hasMany = [
 		comentarios: Comentario,
-		criticas: Critica
+		criticas: Critica,
+		meGusta: MeGusta
 	]
     static constraints = {
     	genero nullable: false

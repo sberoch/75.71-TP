@@ -8,7 +8,7 @@ class Usuario {
 	static hasMany = [
         concursos: Concurso,
         narraciones: Narracion,
-        narracionesConMeGusta: Narracion,
+        meGusta: MeGusta,
         comentarios: Comentario
     ]
 
