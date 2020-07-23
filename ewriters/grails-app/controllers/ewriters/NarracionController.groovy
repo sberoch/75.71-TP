@@ -18,13 +18,15 @@ class NarracionController {
         List<Narracion> results = narracionService.search(params)
         render(view: "index", model: [
             narracionList: results,
-            narracionCount: results.size()])
+            narracionCount: results.size()
+        ])
     }
 
     def show(Long id) {
-        Narracion narracion = narracionService.get(id)
-        println(narracion.cantMeGusta)
-        respond narracion
+        render(view: "show", model: [
+            narracion: narracionService.get(id), 
+            comentarios: narracionService.listarComentarios(id)
+        ])
     }
 
     def create() {
@@ -37,9 +39,10 @@ class NarracionController {
         render(view: "show", model: [narracion: narracion])
     }
 
-    def comentar(Comentario comentario, Long id) {
+    def comentar(String texto, Long id) {
+        def comentario = new Comentario(texto)
         narracionService.agregarComentario(comentario, id)
-        render(view: "index")
+        redirect action: "show", id: id
     }
 
     def save(Narracion narracion) {

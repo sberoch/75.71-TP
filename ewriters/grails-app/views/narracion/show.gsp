@@ -32,7 +32,7 @@
                     <input type="submit" formaction="/narracion/comentar?id=${this.narracion?.id}" value="Enviar"/>
                 </fieldset>
             </g:form>
-            <f:table collection="${this.narracion.comentarios}" properties="escritor, texto"/>
+            <f:table collection="${comentarios}" properties="escritor, texto"/>
         </div>
     </body>
 </html>

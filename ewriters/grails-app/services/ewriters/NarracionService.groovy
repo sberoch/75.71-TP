@@ -39,10 +39,21 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	def agregarComentario(Comentario comentario, Long narracionId) {
+		//TODO: obtener el usuario logueado
+		def usuario = new Usuario("Hardcodeado")
+		usuario.addToComentarios(comentario)
+
 		def narracion = Narracion.get(narracionId)
 		narracion.addToComentarios(comentario)
+
+		usuario.save(flush: true, failOnError: true)
 		narracion.save(flush:true, failOnError: true)
 		comentario.save(flush:true, failOnError: true)
+	}
+
+	@Transactional
+	List<Comentario> listarComentarios(Long narracionId) {
+		return Comentario.findAllByNarracion(Narracion.get(narracionId))
 	}
 
 }
