@@ -35,6 +35,8 @@ class BootStrap {
                 50,
                 Narracion.Genero.FANTASIA)
 
+        concurso.comenzar()
+
         usuario.addToNarraciones(narracion)
         usuario.addToNarraciones(narracion2)
         usuario.addToNarraciones(narracion3)
@@ -50,7 +52,6 @@ class BootStrap {
         comentario.save(failOnError: true)
         concurso.save(failOnError: true)
 
-        //TODO: no se ven las narraciones dentro de concurso
     }
     
     def destroy = {

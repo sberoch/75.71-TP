@@ -16,7 +16,15 @@ class ConcursoController {
     }
 
     def show(Long id) {
-        respond concursoService.get(id)
+        Concurso concurso = concursoService.get(id)
+        render(view: "show", model: [
+            concurso: concurso, 
+            terminado: concurso.terminado()
+        ])
+    }
+
+    def participar(Long id) {
+        //TODO: participar
     }
 
     def create() {
