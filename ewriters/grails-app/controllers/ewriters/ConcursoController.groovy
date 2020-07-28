@@ -27,6 +27,11 @@ class ConcursoController {
         //TODO: participar
     }
 
+    def mostrarGanador(Long id) {
+        Narracion ganadora = concursoService.obtenerNarracionGanadora(id)
+        redirect controller: "narracion", action: "show", id: ganadora.id
+    }
+
     def create() {
         respond new Concurso(params)
     }

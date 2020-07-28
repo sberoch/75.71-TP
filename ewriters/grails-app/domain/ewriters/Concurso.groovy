@@ -9,7 +9,6 @@ class Concurso {
 	Long minimaReputacionParaParticipar
 	Narracion.Genero genero
 	LocalDateTime fechaCreacion
-	Usuario creador
 
 	static hasMany = [narraciones: Narracion]
 	static belongsTo = [creador: Usuario]
@@ -19,17 +18,14 @@ class Concurso {
         recompensa blank: false
         minimaReputacionParaParticipar blank: false
         genero blank: false
-        creador nullable: false
     }
 
-    Concurso(Usuario creador, 
-    	String titulo,	
+    Concurso(String titulo,	
     	String descripcion,	
     	Long recompensa, 
     	Long minimaReputacionParaParticipar, 
     	Narracion.Genero genero) {
 
-    	this.creador = creador
     	this.titulo = titulo 
 		this.descripcion = descripcion 
 		this.recompensa = recompensa 

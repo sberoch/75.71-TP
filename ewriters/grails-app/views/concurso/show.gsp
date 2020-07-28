@@ -9,6 +9,7 @@
         <div id="show-concurso" class="content scaffold-show" role="main">
             <g:if test="${terminado}">
                 <h1>Este concurso ha terminado!</h1>
+                <g:link class="btn btn-outline-success my-2 my-sm-0" action="mostrarGanador" resource="${this.concurso}">Mostrar narracion ganadora</g:link>
             </g:if>
             <g:else>
                 <h1><g:message code="default.show.label" args="[entityName]" /></h1>

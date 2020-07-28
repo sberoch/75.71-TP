@@ -1,9 +1,9 @@
 package ewriters
 
 import grails.gorm.services.Service
+import grails.gorm.transactions.Transactional
 
-@Service(Concurso)
-interface ConcursoService {
+interface IConcursoService {
 
     Concurso get(Serializable id)
 
@@ -15,4 +15,17 @@ interface ConcursoService {
 
     Concurso save(Concurso concurso)
 
+}
+
+@Service(Concurso)
+abstract class ConcursoService implements IConcursoService {
+    
+    @Transactional
+    Narracion obtenerNarracionGanadora(Long id) {
+        //TODO: si hago "narracion belongsTo Concurso" todas las narraciones tendrian que pertenecer a uno
+        //  Hacer una clase NarracionDeConcurso? 
+
+        def narracionesDelConcurso = Narracion.findAllByConcurso(Concurso.get(id))
+        return narracionesDelConcurso.max()
+    }
 }

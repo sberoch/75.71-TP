@@ -28,8 +28,7 @@ class BootStrap {
 
         Comentario comentario = new Comentario("Comentario de bob!")
 
-        Concurso concurso = new Concurso(usuario,
-                "Concurso de Alice",
+        Concurso concurso = new Concurso("Concurso de Alice",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 200,
                 50,
