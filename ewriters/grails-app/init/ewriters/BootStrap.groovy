@@ -5,6 +5,7 @@ class BootStrap {
     def init = { servletContext ->
 
     	Usuario usuario = new Usuario("Bob")
+        Usuario usuario2 = new Usuario("Alice")
 
         Narracion narracion = new Narracion(
             "Narracion de Bob",
@@ -45,6 +46,7 @@ class BootStrap {
         concurso.addToNarraciones(narracion)
 
         usuario.save(failOnError: true)
+        usuario2.save failOnError:true
         narracion.save(failOnError: true)
         narracion2.save(failOnError: true)
         narracion3.save(failOnError: true)

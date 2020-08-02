@@ -50,9 +50,9 @@ abstract class NarracionService implements INarracionService {
 	}
 
 	@Transactional
-	def agregarComentario(Comentario comentario, Long narracionId) {
-		//TODO: obtener el usuario logueado
-		def usuario = new Usuario("Charlie")
+	def agregarComentario(Comentario comentario, Long narracionId, Long userId) {
+
+		def usuario = Usuario.get(userId)
 		def narracion = Narracion.get(narracionId)
 
 		//TODO: comportamientos del dominio
