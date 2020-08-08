@@ -20,6 +20,7 @@ class Narracion implements Comparable {
 	String texto //Puedo necesitar que sea mas largo (ver mappings)
 	Long minimaReputacionParaCritica
 	Boolean publica
+	Concurso concurso
 
 	static belongsTo = [escritor: Usuario]
 	static hasMany = [
@@ -32,6 +33,7 @@ class Narracion implements Comparable {
     	titulo blank: false
     	texto blank: false
     	minimaReputacionParaCritica blank: false
+		concurso nullable: true
     }
 
     Narracion(String titulo, 
