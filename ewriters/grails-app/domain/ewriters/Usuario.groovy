@@ -25,10 +25,9 @@ class Usuario {
         return nombreApellido
     }
 
-    Narracion escribirNarracion(String titulo, String texto, Narracion.Genero genero, Long minimaReputacionParaCritica) {
-    	Narracion narracion = new Narracion(this, titulo, texto, genero, minimaReputacionParaCritica)
-    	narraciones << narracion
-    	return narracion
+    void escribirNarracion(Narracion narracion, EspacioDePublicacion espacioDePublicacion) {
+    	espacioDePublicacion.agregarNarracion(narracion)
+        this.addToNarraciones(narracion)
     }
 
     Concurso crearConcurso(String titulo,   
