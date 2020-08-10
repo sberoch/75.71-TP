@@ -47,8 +47,6 @@ class Concurso extends EspacioDePublicacion {
     void agregarNarracion(Narracion narracion) {
     	if (narracion.genero != this.genero) {
     		throw new IllegalStateException("Genero de la narracion no es el pedido por el concurso")
-    	} else if (narracion.escritor.reputacion < minimaReputacionParaParticipar) {
-    		throw new IllegalStateException("No se tiene reputacion suficiente para participar")
     	} else {
     		this.addToNarraciones(narracion)
     	}

@@ -2,9 +2,13 @@ package ewriters
 
 class BootStrap {
 
+    def sesion
+
     def init = { servletContext ->
 
-    	Usuario usuario = new Usuario("Bob")
+        Usuario creador = new Usuario("Alice")
+        sesion.usuarioActivo = new Usuario("Bob")
+
 
         Narracion narracion = new Narracion(
             "Narracion de Bob",
@@ -13,13 +17,19 @@ class BootStrap {
             30
         )
 
-        EspacioDePublicacion espacioPrincipal = EspacioPrincipal.instance
+        EspacioDePublicacion concurso = new Concurso("Concurso de Alice",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                200,
+                0,
+                Narracion.Genero.NO_FICCION)
 
-        usuario.escribirNarracion(narracion, espacioPrincipal)
+        creador.addToConcursos(concurso)
+        concurso.comenzar()
+        sesion.usuarioActivo.escribirNarracion(narracion, concurso)
 
-        usuario.save(failOnError: true)
+        sesion.usuarioActivo.save(failOnError: true)
         narracion.save(failOnError: true)
-        espacioPrincipal.save(failOnError: true)
+        concurso.save(failOnError: true)
 
     }
     

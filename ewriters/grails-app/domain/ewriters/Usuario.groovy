@@ -39,7 +39,13 @@ class Usuario {
     }
 
     void participarEnConcurso(Narracion narracion, Concurso concurso) {
-        concurso.registrarParticipacion(narracion)
+        if (reputacion < concurso.minimaReputacionParaParticipar) {
+    		throw new IllegalStateException("No se tiene reputacion suficiente para participar")
+    	} else {
+            concurso.registrarParticipacion(narracion)
+            this.addToNarraciones(narracion)
+        }
+        
     }
 
     void meGusta(Narracion narracion) {
