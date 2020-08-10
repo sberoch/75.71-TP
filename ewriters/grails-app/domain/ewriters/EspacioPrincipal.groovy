@@ -7,9 +7,11 @@ class EspacioPrincipal extends EspacioDePublicacion {
     static constraints = {
     }
 
-    EspacioPrincipal() {}
-
     void agregarNarracion(Narracion narracion) {
         this.addToNarraciones(narracion)
+    }
+
+    String toString() {
+        return "Espacio Principal"
     }
 }
