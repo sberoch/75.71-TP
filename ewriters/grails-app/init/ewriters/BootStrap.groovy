@@ -17,13 +17,22 @@ class BootStrap {
             30
         )
 
-        sesion.usuarioActivo.escribirNarracion(narracion, espacioPrincipal)
+        Usuario creador = new Usuario("Alice")
+        Concurso espacio = new Concurso("Concurso de Alice",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            300,
+            0,
+            Narracion.Genero.NO_FICCION)
+        creador.addToConcursos(espacio)
 
-        espacioPrincipal.narraciones.each { println(it) }
-
-        sesion.usuarioActivo.save(failOnError: true)
-        narracion.save(failOnError: true)
-
+        try {
+            sesion.usuarioActivo.escribirNarracion(narracion, espacio)
+            espacio.narraciones.each { println(it) }
+            sesion.usuarioActivo.save(failOnError: true)
+            narracion.save(failOnError: true)
+        } catch(e) {
+            println(e)
+        }
     }
     
     def destroy = {

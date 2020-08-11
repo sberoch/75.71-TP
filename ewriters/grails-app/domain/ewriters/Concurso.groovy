@@ -44,8 +44,10 @@ class Concurso extends EspacioDePublicacion {
         DeterminarGanadorConcursoJob.schedule(fechaFinalizacion, [concurso: this])
     }
 
-    void agregarNarracion(Narracion narracion) {
-    	if (narracion.genero != this.genero) {
+    void agregarNarracion(Narracion narracion, Usuario escritor) {
+        if (escritor.reputacion < this.minimaReputacionParaParticipar) {
+    		throw new IllegalStateException("No se tiene reputacion suficiente para participar")
+    	} else if (narracion.genero != this.genero) {
     		throw new IllegalStateException("Genero de la narracion no es el pedido por el concurso")
     	} else {
     		this.addToNarraciones(narracion)

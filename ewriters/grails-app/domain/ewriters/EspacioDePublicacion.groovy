@@ -1,5 +1,5 @@
 package ewriters
 
 abstract class EspacioDePublicacion {
-    abstract void agregarNarracion(Narracion narracion)
+    abstract void agregarNarracion(Narracion narracion, Usuario escritor)
 }

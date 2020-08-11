@@ -26,26 +26,16 @@ class Usuario {
     }
 
     void escribirNarracion(Narracion narracion, EspacioDePublicacion espacioDePublicacion) {
-    	espacioDePublicacion.agregarNarracion(narracion)
+    	espacioDePublicacion.agregarNarracion(narracion, this)
         this.addToNarraciones(narracion)
     }
 
-    Concurso crearConcurso(String titulo,   
+    Concurso crearConcurso(String titulo,
         String descripcion, 
         Long recompensa, 
         Long minimaReputacionParaParticipar, 
         Narracion.Genero genero) {
         return new Concurso(this, titulo, descripcion, recompensa, minimaReputacionParaParticipar, genero)
-    }
-
-    void participarEnConcurso(Narracion narracion, Concurso concurso) {
-        if (reputacion < concurso.minimaReputacionParaParticipar) {
-    		throw new IllegalStateException("No se tiene reputacion suficiente para participar")
-    	} else {
-            concurso.registrarParticipacion(narracion)
-            this.addToNarraciones(narracion)
-        }
-        
     }
 
     void meGusta(Narracion narracion) {
