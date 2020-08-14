@@ -26,7 +26,7 @@ class Narracion implements Comparable {
 	static hasMany = [
 		comentarios: Comentario,
 		criticas: Critica,
-		meGusta: MeGusta
+		listaMeGusta: MeGusta
 	]
     static constraints = {
     	genero nullable: false
@@ -61,20 +61,30 @@ class Narracion implements Comparable {
 
 	void agregarComentario(Comentario comentario) {
 		if (comentario.escritor.reputacion >= minimaReputacionParaCritica) {
-			comentarios << comentario
+			this.addToComentarios(comentario)
 			popularidad++
 		} else {
 			throw new IllegalStateException("No se tiene reputacion suficiente para comentar")
 		} 
 	}
 
-	void agregarMeGusta() {
-		cantMeGusta++
-		popularidad++
+	void agregarMeGusta(MeGusta meGusta) {
+		if (!listaMeGusta || !listaMeGusta.contains(meGusta)) {
+			this.addToListaMeGusta(meGusta)
+			cantMeGusta++
+			popularidad++
+		} else {
+			throw new IllegalStateException("Ya se agrego este me gusta.")
+		}
 	}
 
-	void removerMeGusta() {
-		cantMeGusta--
-		popularidad--
+	void removerMeGusta(MeGusta meGusta) {
+		if (listaMeGusta.contains(meGusta)) {
+			this.removeFromListaMeGusta(meGusta)
+			cantMeGusta--
+			popularidad--
+		} else {
+			throw new IllegalStateException("Ya se quito este me gusta.")
+		}
 	}
 }

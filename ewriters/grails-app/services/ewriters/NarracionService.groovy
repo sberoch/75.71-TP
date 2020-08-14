@@ -3,6 +3,7 @@ package ewriters
 import grails.gorm.services.Service
 import grails.gorm.transactions.Transactional
 
+
 interface INarracionService {
 
     Narracion get(Serializable id)
@@ -32,36 +33,30 @@ abstract class NarracionService implements INarracionService {
 	}
 
 	@Transactional
-	def meGusta(Long id) {
-		//TODO: obtener el usuario logueado
-		def usuario = new Usuario("Charlie")
-		def narracion = Narracion.get(id)
-		MeGusta meGusta = new MeGusta()
+	def meGusta(Long narracionId, Usuario usuario) {
+		def narracion = Narracion.get(narracionId)
+		MeGusta meGusta = MeGusta.find {
+			(usuario == usuario) &&
+			(narracion == narracion) 
+		}
 
-		//TODO: verificar que pueda
-		narracion.agregarMeGusta()
-
-		usuario.addToMeGusta(meGusta)
-		narracion.addToMeGusta(meGusta)
-
-		usuario.save(flush: true, failOnError: true)
-		narracion.save(flush: true, failOnError: true)
-		meGusta.save(flush: true, failOnError: true)
+		if (meGusta) {
+			narracion.removerMeGusta(meGusta)
+			meGusta.delete(flush: true)
+			narracion.save(flush: true, failOnError: true)
+		} else {
+			meGusta = new MeGusta(usuario)
+			narracion.agregarMeGusta(meGusta)
+			narracion.save(flush: true, failOnError: true)
+			meGusta.save(flush: true, failOnError: true)
+		}
 	}
 
 	@Transactional
-	def agregarComentario(Comentario comentario, Long narracionId, Long userId) {
-
-		def usuario = Usuario.get(userId)
+	def agregarComentario(Comentario comentario, Long narracionId, Usuario usuario) {
 		def narracion = Narracion.get(narracionId)
-
-		//TODO: comportamientos del dominio
-		usuario.addToComentarios(comentario)
-		narracion.addToComentarios(comentario)
-
-		usuario.save(flush: true, failOnError: true)
+		narracion.agregarComentario(comentario)
 		narracion.save(flush: true, failOnError: true)
-		comentario.save(flush: true, failOnError: true)
 	}
 
 	@Transactional

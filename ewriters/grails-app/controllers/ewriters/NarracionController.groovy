@@ -6,11 +6,11 @@ import static org.springframework.http.HttpStatus.*
 class NarracionController {
 
     NarracionService narracionService
+    def sesion
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        session["userId"] = 2
         params.max = Math.min(max ?: 10, 100)
         respond narracionService.list(params), model:[narracionCount: narracionService.count()]
     }
@@ -36,16 +36,19 @@ class NarracionController {
     }
 
     def meGusta(Long id) {
-        narracionService.meGusta(id)
+        narracionService.meGusta(id, sesion.usuarioActivo)
         redirect action: "show", id: id
     }
 
     def comentar(String texto, Long id) {
         def comentario = new Comentario(texto)
-        println(session["userId"])
-        narracionService.agregarComentario(comentario, id, session["userId"])
+        narracionService.agregarComentario(comentario, id, sesion.usuarioActivo)
         redirect action: "show", id: id
     }
+
+
+
+
 
     def save(Narracion narracion) {
         narracion.popularidad = 0

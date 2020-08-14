@@ -1,8 +1,12 @@
 package ewriters
 
 class MeGusta {
+    Usuario usuario
     static belongsTo = [
-    	usuario: Usuario, 
     	narracion: Narracion
     ]
+
+    MeGusta(Usuario usuario) {
+        this.usuario = usuario
+    }
 }

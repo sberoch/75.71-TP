@@ -7,21 +7,16 @@ class BootStrap {
 
     def init = { servletContext ->
 
-        sesion.usuarioActivo = new Usuario("Bob")
-        espacioPrincipal = new EspacioPrincipal()
-
         Narracion narracion = new Narracion(
             "Narracion de Bob",
             "Texto de la narracion",
             Narracion.Genero.NO_FICCION,
-            30
+            0
         )
-
 
         Taller espacio = new Taller()
         espacio.agregarUsuario(sesion.usuarioActivo)
         sesion.usuarioActivo.escribirNarracion(narracion, espacio)
-        espacio.narraciones.each { println(it) }
 
         sesion.usuarioActivo.save(failOnError: true)
         narracion.save(failOnError: true)
