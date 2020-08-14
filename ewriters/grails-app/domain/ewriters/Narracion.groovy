@@ -68,6 +68,17 @@ class Narracion implements Comparable {
 		} 
 	}
 
+	void agregarCritica(Critica critica) {
+		if (critica.escritor.reputacion < minimaReputacionParaCritica) {
+			throw new IllegalStateException("No se tiene reputacion suficiente para comentar")
+		} else if (!this.texto.contains(critica.seccionCriticada) || critica.seccionCriticada.isEmpty()) {
+			throw new IllegalStateException("Se esta criticando sobre una seccion inexistente")
+		} else {
+			this.addToCriticas(critica)
+			popularidad++
+		}
+	}
+
 	void agregarMeGusta(MeGusta meGusta) {
 		if (!listaMeGusta || !listaMeGusta.contains(meGusta)) {
 			this.addToListaMeGusta(meGusta)

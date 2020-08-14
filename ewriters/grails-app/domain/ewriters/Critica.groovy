@@ -3,11 +3,16 @@ package ewriters
 class Critica {
 
 	String texto
-	//Seccion: como modelo?
-	//	Ideas: Puntero a parte del texto donde empieza + largo
+	String seccionCriticada
 
-	static belongsTo = [escritor: Usuario]
+	static belongsTo = [escritor: Usuario, narracion: Narracion]
     static constraints = {
     	texto blank: false
+		seccionCriticada blank: false
     }
+
+	Critica(String texto, String seccionCriticada) {
+		this.texto = texto
+		this.seccionCriticada = seccionCriticada
+	}
 }

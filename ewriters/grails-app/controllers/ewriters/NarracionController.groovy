@@ -27,6 +27,7 @@ class NarracionController {
         render(view: "show", model: [
             narracion: narracionService.get(id), 
             comentarios: narracionService.listarComentarios(id),
+            criticas: narracionService.listarCriticas(id),
             meGustaCount: narracionService.contarMeGusta(id)
         ])
     }
@@ -46,6 +47,11 @@ class NarracionController {
         redirect action: "show", id: id
     }
 
+    def criticar(String texto, String seccionCriticada, Long id) {
+        def critica = new Critica(texto, seccionCriticada)
+        narracionService.agregarCritica(critica, id, sesion.usuarioActivo)
+        redirect action: "show", id: id
+    }
 
 
 
