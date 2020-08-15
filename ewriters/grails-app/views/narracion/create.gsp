@@ -20,16 +20,12 @@
             </g:hasErrors>
             <g:form action="save">
                 <fieldset class="form">
-                    <f:field bean="narracion" property="escritor"/>
-                    <f:field bean="narracion" property="titulo"/>
-                    <f:field bean="narracion" property="texto"/>
-                    <f:field bean="narracion" property="genero"/>
-                    <f:field bean="narracion" property="minimaReputacionParaCritica"/>
-                    <f:field bean="narracion" property="popularidad"/>
-                    <f:field bean="narracion" property="cantMeGusta"/>
+                    <g:field name="titulo" type="text"/>
+                    <g:field name="texto" type="text"/>
+                    <g:field name="minimaReputacionParaCritica" type="number"/>
                 </fieldset>
                 <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <input type="submit" formaction="/narracion/crearEnEspacioPrincipal" value="Enviar"/>
                 </fieldset>
             </g:form>
         </div>

@@ -20,15 +20,13 @@
             </g:hasErrors>
             <g:form action="save">
                 <fieldset class="form">
-                    <f:field bean="concurso" property="creador"/>
-                    <f:field bean="concurso" property="titulo"/>
-                    <f:field bean="concurso" property="descripcion"/>
-                    <f:field bean="concurso" property="genero"/>
-                    <f:field bean="concurso" property="recompensa"/>
-                    <f:field bean="concurso" property="minimaReputacionParaParticipar"/>
+                    <g:field name="titulo" type="text"/>
+                    <g:field name="descripcion" type="text"/>
+                    <g:field name="recompensa" type="number"/>
+                    <g:field name="minimaReputacionParaParticipar" type="number"/>
                 </fieldset>
                 <fieldset class="buttons">
-                    <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <input type="submit" formaction="/concurso/crear" value="Enviar"/>
                 </fieldset>
             </g:form>
         </div>

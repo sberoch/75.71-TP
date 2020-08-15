@@ -7,6 +7,7 @@ import java.time.*
 class ConcursoController {
 
     ConcursoService concursoService
+    def sesion
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -21,6 +22,21 @@ class ConcursoController {
             concurso: concurso, 
             terminado: concurso.terminado()
         ])
+    }
+
+    def crear(
+        String titulo,
+        String descripcion,
+        Long recompensa,
+        Long minimaReputacionParaParticipar) {
+
+        //TODO: falta genero
+
+        Concurso concurso = new Concurso(titulo, descripcion, recompensa, 
+                                    minimaReputacionParaParticipar, Narracion.Genero.TERROR)
+        concursoService.crear(concurso, sesion.usuarioActivo)
+        redirect action: "index"
+            
     }
 
     def participar(Long id) {

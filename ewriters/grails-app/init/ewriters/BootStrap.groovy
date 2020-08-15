@@ -7,6 +7,7 @@ class BootStrap {
 
     def init = { servletContext ->
 
+        espacioPrincipal = new EspacioPrincipal()
         Narracion narracion = new Narracion(
             "Narracion de Bob",
             "Texto de la narracion",

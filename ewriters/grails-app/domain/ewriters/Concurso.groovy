@@ -56,8 +56,8 @@ class Concurso extends EspacioDePublicacion {
 
     void finalizar() {
         println("Termino un concurso!")
-        if (!this.narraciones.isEmpty()) {
-            this.narraciones.max().escritor.ganarConcurso(recompensa)
+        if (narraciones && !narraciones.isEmpty()) {
+            narraciones.max().escritor.ganarConcurso(recompensa)
         }
     }
 

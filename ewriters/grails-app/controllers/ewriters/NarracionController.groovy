@@ -7,6 +7,7 @@ class NarracionController {
 
     NarracionService narracionService
     def sesion
+    def espacioPrincipal
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -32,8 +33,16 @@ class NarracionController {
         ])
     }
 
-    def create() {
-        respond new Narracion(params)
+    def crearEnEspacioPrincipal(
+        String titulo, 
+        String texto,
+        Long minimaReputacionParaCritica) {
+
+        //TODO: falta el genero
+
+        Narracion narracion = new Narracion(titulo, texto, Narracion.Genero.TERROR, minimaReputacionParaCritica)
+        narracionService.crear(narracion, espacioPrincipal, sesion.usuarioActivo)
+        redirect action: "index"
     }
 
     def meGusta(Long id) {
@@ -55,6 +64,10 @@ class NarracionController {
 
 
 
+
+    def create() {
+        respond new Narracion(params)
+    }
 
     def save(Narracion narracion) {
         narracion.popularidad = 0

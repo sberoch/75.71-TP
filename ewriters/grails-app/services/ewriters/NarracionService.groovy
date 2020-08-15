@@ -33,6 +33,12 @@ abstract class NarracionService implements INarracionService {
 	}
 
 	@Transactional
+	void crear(Narracion narracion, EspacioDePublicacion espacio, Usuario escritor) {
+		escritor.escribirNarracion(narracion, espacio)
+		narracion.save(failOnError: true)
+	}
+
+	@Transactional
 	def meGusta(Long narracionId, Usuario usuario) {
 		def narracion = Narracion.get(narracionId)
 		MeGusta meGusta = MeGusta.find {

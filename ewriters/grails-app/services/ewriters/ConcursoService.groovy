@@ -28,4 +28,11 @@ abstract class ConcursoService implements IConcursoService {
         def narracionesDelConcurso = Narracion.findAllByConcurso(Concurso.get(id))
         return narracionesDelConcurso.max()
     }
+
+    @Transactional
+    void crear(Concurso concurso, Usuario creador) {
+        creador.addToConcursos(concurso)
+        concurso.comenzar()
+        concurso.save(failOnError: true)
+    }
 }
