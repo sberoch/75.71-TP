@@ -2,26 +2,42 @@ package ewriters
 
 class Taller extends EspacioDePublicacion {
 
+    String titulo
+
     static hasMany = [
         narraciones: Narracion,
         usuarios: Usuario
     ]
+    static belongsTo = [creador: Usuario]
     static constraints = {
     }
 
+    Taller(String titulo) {
+        this.titulo = titulo
+    }
+
     void agregarUsuario(Usuario usuario) {
-        this.addToUsuarios(usuario)
+        if (!usuarios || !usuarios.contains(usuario)) {
+            this.addToUsuarios(usuario)
+        } else {
+            throw new IllegalStateException("Este usuario ya esta en el taller")
+        }
     }
 
     void removerUsuario(Usuario usuario) {
-        this.removeFromUsuarios(usuario)
+        if (usuarios.contains(usuario)) {
+            this.removeFromUsuarios(usuario)
+        } else {
+            throw new IllegalStateException("Este usuario no esta en el taller")
+        }
+        
     }
 
-    void agregarNarracion(Narracion narracion, Usuario escritor) { 
-        if (escritor in usuarios) {
+    void agregarNarracion(Narracion narracion, Usuario escritor) {
+        if (usuarios.contains(escritor)) {
             this.addToNarraciones(narracion)
         } else {
-            throw new IllegalStateException("El usuario no pertenece a este taller")
+            throw new IllegalStateException("Este usuario no esta en el taller")
         }
     }
 }

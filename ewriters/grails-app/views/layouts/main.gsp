@@ -29,7 +29,10 @@
         <a class="nav-link" href="/">Inicio</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/concurso/index">Concursos</a>
+        <a class="nav-link" href="/concursos">Concursos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/talleres">Talleres</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/narracion/create">Escribir una narracion</a>

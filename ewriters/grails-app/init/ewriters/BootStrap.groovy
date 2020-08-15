@@ -8,19 +8,14 @@ class BootStrap {
     def init = { servletContext ->
 
         espacioPrincipal = new EspacioPrincipal()
-        Narracion narracion = new Narracion(
-            "Narracion de Bob",
-            "Texto de la narracion",
-            Narracion.Genero.NO_FICCION,
-            0
-        )
-
-        Taller espacio = new Taller()
-        espacio.agregarUsuario(sesion.usuarioActivo)
-        sesion.usuarioActivo.escribirNarracion(narracion, espacio)
+        
+        Usuario creador = new Usuario("Alice")
+        creador.save(failOnError: true)
+        Taller espacio = new Taller("Taller re copado")
+        creador.addToTalleres(espacio)
 
         sesion.usuarioActivo.save(failOnError: true)
-        narracion.save(failOnError: true)
+        espacio.save(failOnError: true)
 
     }
     

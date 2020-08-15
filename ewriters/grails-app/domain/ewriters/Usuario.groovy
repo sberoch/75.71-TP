@@ -7,11 +7,13 @@ class Usuario {
 
 	static hasMany = [
         concursos: Concurso,
+        talleres: Taller,
         narraciones: Narracion,
         misMeGusta: MeGusta,
         comentarios: Comentario,
         criticas: Critica
     ]
+    static mappedBy = [talleres: "creador"]
 
     static constraints = {
         nombreApellido blank: false
@@ -24,6 +26,15 @@ class Usuario {
 
     String toString() {
         return nombreApellido
+    }
+
+    boolean equals(other) {
+        return this.nombreApellido == other.nombreApellido
+    }
+
+    int hashCode() {
+        //TODO: mejorar el hashcode. @EqualsAndHashCode no sirve
+        return nombreApellido.size()
     }
 
     void escribirNarracion(Narracion narracion, EspacioDePublicacion espacioDePublicacion) {
