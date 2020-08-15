@@ -40,7 +40,7 @@ class Concurso extends EspacioDePublicacion {
 
     void comenzar() {
         println("Comenzo un concurso!")
-        def fechaFinalizacion = Date.from(this.fechaCreacion.plusSeconds(7).atZone(ZoneId.systemDefault()).toInstant())
+        def fechaFinalizacion = Date.from(this.fechaCreacion.plusDays(7).atZone(ZoneId.systemDefault()).toInstant())
         DeterminarGanadorConcursoJob.schedule(fechaFinalizacion, [concurso: this])
     }
 
@@ -62,6 +62,6 @@ class Concurso extends EspacioDePublicacion {
     }
 
     boolean terminado() {
-        return fechaCreacion.plusSeconds(7) < LocalDateTime.now()
+        return fechaCreacion.plusDays(7) < LocalDateTime.now()
     }
 }

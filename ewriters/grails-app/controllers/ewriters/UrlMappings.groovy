@@ -11,6 +11,7 @@ class UrlMappings {
 
         "/"(controller:"narracion")
         "/narraciones"(resources: "narracion")
+        "/concurso/participar/$id?"(controller: 'concurso', action: 'participar')
         "500"(view:'/error')
         "404"(view:'/notFound')
     }

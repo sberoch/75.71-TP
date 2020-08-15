@@ -35,4 +35,10 @@ abstract class ConcursoService implements IConcursoService {
         concurso.comenzar()
         concurso.save(failOnError: true)
     }
+
+    @Transactional
+    void enviarNarracion(Narracion narracion, Concurso concurso, Usuario escritor) {
+        escritor.escribirNarracion(narracion, concurso)
+        narracion.save(failOnError: true)
+    }
 }

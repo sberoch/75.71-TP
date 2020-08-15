@@ -40,7 +40,14 @@ class ConcursoController {
     }
 
     def participar(Long id) {
-        //TODO: participar
+        render view: "participar", model: [concurso: concursoService.get(id)]
+    }
+
+    def enviarNarracion(String titulo, String texto, Long id) {
+        Concurso concurso = concursoService.get(id)
+        Narracion narracion = new Narracion(titulo, texto, concurso.genero)
+        concursoService.enviarNarracion(narracion, concurso, sesion.usuarioActivo)
+        redirect action: "show", id: id
     }
 
     def mostrarGanador(Long id) {
