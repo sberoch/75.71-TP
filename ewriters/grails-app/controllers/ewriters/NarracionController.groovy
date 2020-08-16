@@ -7,7 +7,6 @@ class NarracionController {
 
     NarracionService narracionService
     def sesion
-    def espacioPrincipal
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -41,7 +40,7 @@ class NarracionController {
         //TODO: falta el genero
 
         Narracion narracion = new Narracion(titulo, texto, Narracion.Genero.TERROR, minimaReputacionParaCritica)
-        narracionService.crear(narracion, espacioPrincipal, sesion.usuarioActivo)
+        narracionService.crear(narracion, sesion.usuarioActivo)
         redirect action: "index"
     }
 

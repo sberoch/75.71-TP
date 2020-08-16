@@ -21,8 +21,8 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	List<Narracion> list(Map args) {
-		//TODO: paginar
-		return Narracion.findAllByPublica(true, [sort: "popularidad", order: "desc"])
+		EspacioPrincipal espacio = EspacioPrincipal.list()?.first()
+		return Narracion.findAllByEspacio(espacio, [sort: "popularidad", order: "desc"])
 	}
 
 	@Transactional
@@ -33,7 +33,8 @@ abstract class NarracionService implements INarracionService {
 	}
 
 	@Transactional
-	void crear(Narracion narracion, EspacioDePublicacion espacio, Usuario escritor) {
+	void crear(Narracion narracion, Usuario escritor) {
+		EspacioPrincipal espacio = EspacioPrincipal.list()?.first()
 		escritor.escribirNarracion(narracion, espacio)
 		narracion.save(failOnError: true)
 	}

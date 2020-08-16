@@ -22,7 +22,7 @@ class Narracion implements Comparable {
 	Boolean publica
 	Concurso concurso
 
-	static belongsTo = [escritor: Usuario]
+	static belongsTo = [escritor: Usuario, espacio: EspacioDePublicacion]
 	static hasMany = [
 		comentarios: Comentario,
 		criticas: Critica,

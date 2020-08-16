@@ -12,7 +12,6 @@ class TallerController {
 
     def show(Long id) {
         Taller taller = tallerService.get(id)
-        taller.usuarios.each { println("Show: " + it) }
         render(view: "show", model:[
             taller: taller
         ])

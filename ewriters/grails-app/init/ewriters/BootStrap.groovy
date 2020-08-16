@@ -8,6 +8,7 @@ class BootStrap {
     def init = { servletContext ->
 
         espacioPrincipal = new EspacioPrincipal()
+        espacioPrincipal.save(failOnError: true)
         
         Usuario creador = new Usuario("Alice")
         creador.save(failOnError: true)

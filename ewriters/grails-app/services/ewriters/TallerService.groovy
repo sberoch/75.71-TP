@@ -33,7 +33,6 @@ abstract class TallerService implements ITallerService {
         if (usuario) {
             taller.agregarUsuario(usuario)
             taller.save(flush: true, failOnError: true)
-            taller.usuarios.each { println("!!!!" + it) }
         } else {
             throw new IllegalStateException("No se encontro un usuario con ese nombre")
         }
@@ -54,7 +53,6 @@ abstract class TallerService implements ITallerService {
     @Transactional
     void agregarNarracion(Long tallerId, Narracion narracion, Usuario escritor) {
         Taller taller = Taller.get(tallerId)
-        taller.usuarios.each { println("\n\n" + it + "\n\n") }
         escritor.escribirNarracion(narracion, taller)
         narracion.save(flush: true, failOnError: true)
     }
