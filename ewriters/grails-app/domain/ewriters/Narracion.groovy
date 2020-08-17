@@ -17,10 +17,9 @@ class Narracion implements Comparable {
 	Long popularidad
 	Long cantMeGusta
 	String titulo
-	String texto //Puedo necesitar que sea mas largo (ver mappings)
+	String texto
 	Long minimaReputacionParaCritica
 	Boolean publica
-	Concurso concurso
 
 	static belongsTo = [escritor: Usuario, espacio: EspacioDePublicacion]
 	static hasMany = [
@@ -31,9 +30,8 @@ class Narracion implements Comparable {
     static constraints = {
     	genero nullable: false
     	titulo blank: false
-    	texto blank: false
+    	texto blank: false, size:0..65535
     	minimaReputacionParaCritica blank: false
-		concurso nullable: true
     }
 
     Narracion(String titulo, 

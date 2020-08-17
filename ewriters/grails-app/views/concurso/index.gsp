@@ -6,21 +6,16 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#list-concurso" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
         <div id="list-concurso" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${concursoList}" properties="titulo, descripcion, recompensa, minimaReputacionParaParticipar, genero, creador"/>
-
-            <div class="pagination">
-                <g:paginate total="${concursoCount ?: 0}" />
+            <g:render template="/templates/concursoEnLista" var="concurso" collection="${concursoList}" />
+            <div class="container">
+                <h3 class="mt-5">¿Deseas crear un concurso?</h3>
+                <form class="input-group p-3" action="/concurso/create">
+                    <button class="btn btn-primary btn-lg px-5" type="submit">Crear</button>
+                </form>
             </div>
         </div>
     </body>

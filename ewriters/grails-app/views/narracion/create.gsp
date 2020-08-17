@@ -3,11 +3,10 @@
     <head>
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'narracion.label', default: 'Narracion')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>Escribir una Narracion</title>
     </head>
     <body>
         <div id="create-narracion" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
@@ -18,16 +17,9 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form action="save">
-                <fieldset class="form">
-                    <g:field name="titulo" type="text"/>
-                    <g:field name="texto" type="text"/>
-                    <g:field name="minimaReputacionParaCritica" type="number"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input type="submit" formaction="/narracion/crearEnEspacioPrincipal" value="Enviar"/>
-                </fieldset>
-            </g:form>
+            <g:set var="action" value="${"/narracion/crearEnEspacioPrincipal"}" />
+            <g:set var="espacio" value="${"espacioPrincipal"}" />
+            <g:render template="/templates/crearNarracion" model="[espacio: espacio, action: action]" />
         </div>
     </body>
 </html>

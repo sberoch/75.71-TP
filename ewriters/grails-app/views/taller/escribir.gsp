@@ -7,19 +7,12 @@
     </head>
     <body>
         <div id="escribir-narracion-taller" class="content scaffold-create" role="main">
-            <h1>Escribir una narracion</h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <g:form action="save">
-                <fieldset class="form">
-                    <g:field name="titulo" type="text" value="Titulo"/>
-                    <g:field name="texto" type="text"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input type="submit" formaction="/taller/agregarNarracion?id=${taller.id}" value="Enviar"/>
-                </fieldset>
-            </g:form>
+            <g:set var="espacio" value="${"/taller/agregarNarracion?id=${taller.id}"}" />
+            <g:set var="espacio" value="${"taller"}" />
+            <g:render template="/templates/crearNarracion" model="[espacio: espacio, action: action]" />
         </div>
     </body>
 </html>

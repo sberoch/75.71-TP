@@ -9,14 +9,31 @@ class BootStrap {
 
         espacioPrincipal = new EspacioPrincipal()
         espacioPrincipal.save(failOnError: true)
-        
-        Usuario creador = new Usuario("Alice")
-        creador.save(failOnError: true)
-        Taller espacio = new Taller("Taller re copado")
-        creador.addToTalleres(espacio)
-
         sesion.usuarioActivo.save(failOnError: true)
-        espacio.save(failOnError: true)
+
+        Narracion narracion = new Narracion(
+            "Un titulo de prueba",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+            Narracion.Genero.TERROR
+        )
+        Narracion narracion2 = new Narracion(
+            "Otra prueba",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+            Narracion.Genero.TERROR
+        )
+        Narracion narracion3 = new Narracion(
+            "Ultima prueba",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+            Narracion.Genero.TERROR
+        )
+
+        sesion.usuarioActivo.escribirNarracion(narracion, espacioPrincipal)
+        sesion.usuarioActivo.escribirNarracion(narracion2, espacioPrincipal)
+        sesion.usuarioActivo.escribirNarracion(narracion3, espacioPrincipal)
+
+        narracion.save(failOnError: true)
+        narracion2.save(failOnError: true)
+        narracion3.save(failOnError: true)
 
     }
     

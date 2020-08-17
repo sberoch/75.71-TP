@@ -10,11 +10,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${narracionList}" properties="titulo, texto, genero, escritor, cantMeGusta"/>
-
-            <div class="pagination">
-                <g:paginate total="${narracionCount ?: 0}" />
-            </div>
+            <g:render template="/templates/narracionEnLista" var="narracion" collection="${narracionList}" />
         </div>
     </body>
 </html>

@@ -6,22 +6,29 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#list-taller" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-            </ul>
-        </div>
         <div id="list-taller" class="content scaffold-list" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${tallerList}" />
-
-            <div class="pagination">
-                <g:paginate total="${tallerCount ?: 0}" />
+            <g:if test="${tallerList != null}">
+                <div class="container">
+                    <h2 class="mt-5">Actualmente participas de los siguientes talleres</h2>
+                </div>
+            </g:if>
+            <g:else>
+                <div class="container">
+                    <h2 class="mt-5">Actualmente no participas de ningun taller</h2>
+                </div>
+            </g:else>
+            <g:render template="/templates/tallerEnLista" var="taller" collection="${tallerList}" />
+            <div class="container">
+                <h3 class="mt-5">¿Deseas crear un taller?</h3>
+                <form class="input-group p-3" action="/taller/crear">
+                    <input type="text" name="titulo" class="form-control" placeholder="Titulo del taller" aria-label="Titulo del taller" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Crear</button>
+                    </div>
+                </form>
             </div>
         </div>
     </body>

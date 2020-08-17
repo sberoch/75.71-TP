@@ -10,6 +10,7 @@ class Taller extends EspacioDePublicacion {
     ]
     static belongsTo = [creador: Usuario]
     static constraints = {
+        titulo blank: false
     }
 
     Taller(String titulo) {
