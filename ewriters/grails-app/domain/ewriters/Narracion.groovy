@@ -1,4 +1,5 @@
 package ewriters
+import java.time.*
 
 class Narracion implements Comparable {
 
@@ -19,7 +20,7 @@ class Narracion implements Comparable {
 	String titulo
 	String texto
 	Long minimaReputacionParaCritica
-	Boolean publica
+	LocalDateTime fechaCreacion
 
 	static belongsTo = [escritor: Usuario, espacio: EspacioDePublicacion]
 	static hasMany = [
@@ -37,16 +38,15 @@ class Narracion implements Comparable {
     Narracion(String titulo, 
     	String texto, 
     	Genero genero,
-    	Long minimaReputacionParaCritica = 0,
-    	Boolean publica = true) {
+    	Long minimaReputacionParaCritica = 0) {
 
     	this.titulo = titulo
 		this.texto = texto
 		this.genero = genero
 		this.minimaReputacionParaCritica = minimaReputacionParaCritica
-		this.publica = publica
 		this.popularidad = 0
 		this.cantMeGusta = 0
+		this.fechaCreacion = LocalDateTime.now()
     }
 
     String toString() {

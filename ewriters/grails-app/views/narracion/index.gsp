@@ -10,6 +10,14 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
+            <div class="container">
+                <h6 class="mt-5">Ordenar por...</h6>
+                <form action="/">
+                    <g:select class="form-control w-25" name="ordenamiento" from="${['Popularidad', 'Fecha de publicacion', 'Nombre']}"
+                    valueMessagePrefix="ordenamiento" onchange="javascript:this.form.submit()"
+                    noSelection="['':'-Seleccionar-']" />
+                </form>
+            </div>
             <g:render template="/templates/narracionEnLista" var="narracion" collection="${narracionList}" />
         </div>
     </body>

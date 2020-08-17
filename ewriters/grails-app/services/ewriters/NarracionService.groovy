@@ -22,7 +22,20 @@ abstract class NarracionService implements INarracionService {
 	@Transactional
 	List<Narracion> list(Map args) {
 		EspacioPrincipal espacio = EspacioPrincipal.list()?.first()
-		return Narracion.findAllByEspacio(espacio, [sort: "popularidad", order: "desc"])
+		switch(args.ordenamiento) {
+			case "Popularidad":
+				return Narracion.findAllByEspacio(espacio, [sort: "popularidad", order: "desc"])
+			
+			case "Fecha de publicacion":
+				return Narracion.findAllByEspacio(espacio, [sort: "fechaCreacion", order: "desc"])
+			
+			case "Nombre":
+				return Narracion.findAllByEspacio(espacio, [sort: "titulo"])
+
+			default:
+				return Narracion.findAllByEspacio(espacio, [sort: "popularidad", order: "desc"])
+		}
+		
 	}
 
 	@Transactional
