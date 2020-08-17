@@ -22,10 +22,7 @@ abstract class ConcursoService implements IConcursoService {
     
     @Transactional
     Narracion obtenerNarracionGanadora(Long id) {
-        //TODO: si hago "narracion belongsTo Concurso" todas las narraciones tendrian que pertenecer a uno
-        //  Hacer una clase NarracionDeConcurso? 
-
-        def narracionesDelConcurso = Narracion.findAllByConcurso(Concurso.get(id))
+        def narracionesDelConcurso = Narracion.findAllByEspacio(Concurso.get(id))
         return narracionesDelConcurso.max()
     }
 

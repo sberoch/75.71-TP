@@ -3,11 +3,10 @@
     <head>
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'concurso.label', default: 'Concurso')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>Crear concurso</title>
     </head>
     <body>
         <div id="create-concurso" class="content scaffold-create" role="main">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
@@ -18,17 +17,7 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form action="save">
-                <fieldset class="form">
-                    <g:field name="titulo" type="text"/>
-                    <g:field name="descripcion" type="text"/>
-                    <g:field name="recompensa" type="number"/>
-                    <g:field name="minimaReputacionParaParticipar" type="number"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input type="submit" formaction="/concurso/crear" value="Enviar"/>
-                </fieldset>
-            </g:form>
+            <g:render template="/templates/crearConcurso" />
         </div>
     </body>
 </html>

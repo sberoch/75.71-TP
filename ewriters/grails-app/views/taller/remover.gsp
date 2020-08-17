@@ -7,18 +7,18 @@
     </head>
     <body>
         <div id="remover-usuario" class="content scaffold-create" role="main">
-            <h1>Remover un usuario</h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <g:form action="save">
-                <fieldset class="form">
-                    <g:field name="nombre" type="text" value="Nombre del usuario"/>
-                </fieldset>
-                <fieldset class="buttons">
-                    <input type="submit" formaction="/taller/removerUsuario?id=${taller.id}" value="Enviar"/>
-                </fieldset>
-            </g:form>
+            <div class="container">
+              <h3 class="mt-5">Remover un usuario</h3>
+              <form class="input-group mt-4" action="/taller/removerUsuario/${taller.id}">
+                  <input type="text" name="nombre" class="form-control" placeholder="Nombre del usuario" aria-label="Nombre del usuario" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-primary" type="submit">Remover</button>
+                  </div>
+              </form>
+            </div>
         </div>
     </body>
 </html>

@@ -10,7 +10,7 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <g:set var="action" value="${"/concurso/enviarNarracion?id=${concurso.id}"}" />
+            <g:set var="action" value="${"/concurso/enviarNarracion/${concurso.id}"}" />
             <g:set var="espacio" value="${"concurso"}" />
             <g:render template="/templates/crearNarracion" model="[espacio: espacio, action: action]" />
         </div>

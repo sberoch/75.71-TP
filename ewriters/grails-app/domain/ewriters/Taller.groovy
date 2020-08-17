@@ -35,7 +35,7 @@ class Taller extends EspacioDePublicacion {
     }
 
     void agregarNarracion(Narracion narracion, Usuario escritor) {
-        if (usuarios.contains(escritor)) {
+        if (usuarios.contains(escritor) || escritor.equals(creador)) {
             this.addToNarraciones(narracion)
         } else {
             throw new IllegalStateException("Este usuario no esta en el taller")

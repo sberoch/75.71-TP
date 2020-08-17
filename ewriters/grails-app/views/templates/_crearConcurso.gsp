@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mt-5">Crear un concurso</h1>
+      <form class="mt-5" action="/concurso/crear">
+          <div class="form-group">
+            <label for="fc-titulo">Titulo</label>
+            <input type="text" name="titulo" class="form-control" id="fc-titulo" placeholder="Titulo del concurso">
+          </div>
+          <div class="form-group">
+            <label for="fc-desc">Texto</label>
+            <textarea class="form-control" name="descripcion" id="fc-desc" rows="3" placeholder="Descripcion del concurso"></textarea>
+          </div>
+          <div class="form-group">
+              <label for="fc-genero">Genero de las narraciones</label>
+              <select class="form-control" id="fc-genero">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              </select>
+          </div>
+          <div class="form-group">
+            <label for="fc-minRep">Minima reputacion para participar</label>
+            <input type="number" class="form-control" name="minimaReputacionParaParticipar" id="fc-minRep" placeholder="100">
+          </div>
+          <div class="form-group">
+            <label for="fc-recompensa">Recompensa</label>
+            <input type="number" class="form-control" name="recompensa" id="fc-recompensa" placeholder="300">
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
