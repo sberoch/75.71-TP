@@ -10,9 +10,10 @@ class Usuario {
         talleres: Taller,
         narraciones: Narracion,
         misMeGusta: MeGusta,
-        comentarios: Comentario,
-        criticas: Critica
+        comentarios: Comentario
     ]
+
+    //Para poder hacer la relacion creador tiene taller | taller tiene usuarios
     static mappedBy = [talleres: "creador"]
 
     static constraints = {
@@ -33,8 +34,7 @@ class Usuario {
     }
 
     int hashCode() {
-        //TODO: mejorar el hashcode. @EqualsAndHashCode no sirve
-        return nombreApellido.size()
+        return Objects.hash(nombreApellido, reputacion)
     }
 
     void escribirNarracion(Narracion narracion, EspacioDePublicacion espacioDePublicacion) {
@@ -46,11 +46,19 @@ class Usuario {
         String descripcion, 
         Long recompensa, 
         Long minimaReputacionParaParticipar, 
-        Narracion.Genero genero) {
+        Genero genero) {
         return new Concurso(this, titulo, descripcion, recompensa, minimaReputacionParaParticipar, genero)
     }
 
     void ganarConcurso(Long recompensa) {
         this.reputacion += recompensa
+    }
+
+    void responderComentario(Comentario comentario, String respuesta) {
+        if (comentario.narracion.escritor.equals(this)) {
+            comentario.respuesta = respuesta
+            reputacion++
+            comentario.narracion.popularidad++
+        }
     }
 }

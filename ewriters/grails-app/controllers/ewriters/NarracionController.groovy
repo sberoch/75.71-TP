@@ -27,7 +27,6 @@ class NarracionController {
         render(view: "show", model: [
             narracion: narracionService.get(id), 
             comentarios: narracionService.listarComentarios(id),
-            criticas: narracionService.listarCriticas(id),
             meGustaCount: narracionService.contarMeGusta(id)
         ])
     }
@@ -35,11 +34,10 @@ class NarracionController {
     def crearEnEspacioPrincipal(
         String titulo, 
         String texto,
+        String genero,
         Long minimaReputacionParaCritica) {
 
-        //TODO: falta el genero
-
-        Narracion narracion = new Narracion(titulo, texto, Narracion.Genero.TERROR, minimaReputacionParaCritica)
+        Narracion narracion = new Narracion(titulo, texto, genero, minimaReputacionParaCritica)
         narracionService.crear(narracion, sesion.usuarioActivo)
         redirect action: "index"
     }
@@ -48,18 +46,18 @@ class NarracionController {
         narracionService.meGusta(id, sesion.usuarioActivo)
         redirect action: "show", id: id
     }
-
-    def comentar(String texto, Long id) {
-        def comentario = new Comentario(texto)
+    
+    def comentar(String texto, String seccionCriticada, Long id) {
+        def comentario = new Comentario(texto, seccionCriticada)
         narracionService.agregarComentario(comentario, id, sesion.usuarioActivo)
         redirect action: "show", id: id
     }
 
-    def criticar(String texto, String seccionCriticada, Long id) {
-        def critica = new Critica(texto, seccionCriticada)
-        narracionService.agregarCritica(critica, id, sesion.usuarioActivo)
-        redirect action: "show", id: id
+    def responder(String respuesta, Long narracionId, Long id) {
+        narracionService.responder(respuesta, id, sesion.usuarioActivo)
+        redirect action: "show", id: narracionId
     }
+
 
 
 

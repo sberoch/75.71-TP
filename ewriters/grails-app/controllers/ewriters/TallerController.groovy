@@ -33,11 +33,8 @@ class TallerController {
         redirect action: "show", id: id
     }
 
-    def agregarNarracion(String titulo, String texto, Long id) {
-
-        //TODO: genero
-
-        Narracion narracion = new Narracion(titulo, texto, Narracion.Genero.TERROR)
+    def agregarNarracion(String titulo, String texto, String genero, Long id) {
+        Narracion narracion = new Narracion(titulo, texto, genero)
         tallerService.agregarNarracion(id, narracion, sesion.usuarioActivo)
         redirect action: "show", id: id
     }

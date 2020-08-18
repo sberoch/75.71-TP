@@ -1,3 +1,5 @@
+<%@ page import="ewriters.Genero" %>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -10,13 +12,7 @@
           <g:if test="${espacio != 'concurso'}">
             <div class="form-group">
               <label for="fc-genero">Genero</label>
-              <select class="form-control" id="fc-genero">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
+              <g:select class="form-control" name="genero" from="${Genero.values()*.value}" id="fc-genero" />
             </div>
           </g:if>
           <div class="form-group">

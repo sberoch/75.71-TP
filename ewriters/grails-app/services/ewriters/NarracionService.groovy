@@ -81,26 +81,20 @@ abstract class NarracionService implements INarracionService {
 	}
 
 	@Transactional
-	def agregarCritica(Critica critica, Long narracionId, Usuario usuario) {
-		def narracion = Narracion.get(narracionId)
-		usuario.addToCriticas(critica)
-		narracion.agregarCritica(critica)
-		narracion.save(flush: true, failOnError: true)
-	}
-
-	@Transactional
 	List<Comentario> listarComentarios(Long narracionId) {
 		return Comentario.findAllByNarracion(Narracion.get(narracionId))
 	}
 
 	@Transactional
-	List<Critica> listarCriticas(Long narracionId) {
-		return Critica.findAllByNarracion(Narracion.get(narracionId))
+	Long contarMeGusta(Long id) {
+		return MeGusta.findAllByNarracion(Narracion.get(id)).size()
 	}
 
 	@Transactional
-	Long contarMeGusta(Long id) {
-		return MeGusta.findAllByNarracion(Narracion.get(id)).size()
+	void responder(String respuesta, Long comentarioId, Usuario usuario) {
+		def comentario = Comentario.get(comentarioId)
+		usuario.responderComentario(comentario, respuesta)
+		comentario.save(flush: true, failOnError: true)
 	}
 
 }

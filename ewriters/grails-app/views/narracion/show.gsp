@@ -11,14 +11,6 @@
             <div class="message" role="status">${flash.message}</div>
             </g:if>
             <g:render template="/templates/narracion" model="[narracion: narracion]" />
-            <g:form action="criticar">
-                <fieldset class="form">
-                    <g:field name="texto" type="text" value="Agregar una critica"/>
-                    <g:field name="seccionCriticada" type="text" value=""/>
-                    <input type="submit" formaction="/narracion/criticar?id=${this.narracion?.id}" value="Enviar"/>
-                </fieldset>
-            </g:form>
-            <f:table collection="${criticas}" properties="escritor, texto, seccionCriticada"/>
         </div>
     </body>
 </html>

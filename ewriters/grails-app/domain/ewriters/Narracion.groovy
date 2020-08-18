@@ -3,17 +3,6 @@ import java.time.*
 
 class Narracion implements Comparable {
 
-	enum Genero {
-		TERROR,
-		CIENCIA_FICCION,
-		NO_FICCION,
-		POESIA,
-		FANTASIA,
-		ROMANCE,
-		MISTERIO,
-		HUMOR
-	}
-
 	Genero genero
 	Long popularidad
 	Long cantMeGusta
@@ -25,7 +14,6 @@ class Narracion implements Comparable {
 	static belongsTo = [escritor: Usuario, espacio: EspacioDePublicacion]
 	static hasMany = [
 		comentarios: Comentario,
-		criticas: Critica,
 		listaMeGusta: MeGusta
 	]
     static constraints = {
@@ -37,12 +25,12 @@ class Narracion implements Comparable {
 
     Narracion(String titulo, 
     	String texto, 
-    	Genero genero,
+    	String genero,
     	Long minimaReputacionParaCritica = 0) {
 
     	this.titulo = titulo
 		this.texto = texto
-		this.genero = genero
+		this.genero = genero as Genero
 		this.minimaReputacionParaCritica = minimaReputacionParaCritica
 		this.popularidad = 0
 		this.cantMeGusta = 0
@@ -61,20 +49,10 @@ class Narracion implements Comparable {
 		if (comentario.escritor.reputacion >= minimaReputacionParaCritica) {
 			this.addToComentarios(comentario)
 			popularidad++
+			escritor.reputacion++
 		} else {
 			throw new IllegalStateException("No se tiene reputacion suficiente para comentar")
 		} 
-	}
-
-	void agregarCritica(Critica critica) {
-		if (critica.escritor.reputacion < minimaReputacionParaCritica) {
-			throw new IllegalStateException("No se tiene reputacion suficiente para comentar")
-		} else if (!this.texto.contains(critica.seccionCriticada) || critica.seccionCriticada.isEmpty()) {
-			throw new IllegalStateException("Se esta criticando sobre una seccion inexistente")
-		} else {
-			this.addToCriticas(critica)
-			popularidad++
-		}
 	}
 
 	void agregarMeGusta(MeGusta meGusta) {
@@ -82,6 +60,7 @@ class Narracion implements Comparable {
 			this.addToListaMeGusta(meGusta)
 			cantMeGusta++
 			popularidad++
+			escritor.reputacion++
 		} else {
 			throw new IllegalStateException("Ya se agrego este me gusta.")
 		}
@@ -92,6 +71,7 @@ class Narracion implements Comparable {
 			this.removeFromListaMeGusta(meGusta)
 			cantMeGusta--
 			popularidad--
+			escritor.reputacion--
 		} else {
 			throw new IllegalStateException("Ya se quito este me gusta.")
 		}

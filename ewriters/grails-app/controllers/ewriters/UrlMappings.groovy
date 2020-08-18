@@ -11,6 +11,7 @@ class UrlMappings {
 
         "/"(controller:"narracion")
         "/narraciones"(resources: "narracion")
+        "/narracion/$id/responder/$id"(controller: 'narracion', action: 'responder')
         "/concursos"(resources: "concurso")
         "/talleres"(resources: "taller")
         "/concurso/participar/$id?"(controller: 'concurso', action: 'participar')

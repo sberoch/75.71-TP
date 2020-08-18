@@ -7,7 +7,7 @@ class Concurso extends EspacioDePublicacion {
 	String descripcion
 	Long recompensa
 	Long minimaReputacionParaParticipar
-	Narracion.Genero genero
+	Genero genero
 	LocalDateTime fechaCreacion
 
 	static hasMany = [narraciones: Narracion]
@@ -24,13 +24,13 @@ class Concurso extends EspacioDePublicacion {
     	String descripcion,	
     	Long recompensa, 
     	Long minimaReputacionParaParticipar, 
-    	Narracion.Genero genero) {
+    	String genero) {
 
     	this.titulo = titulo 
 		this.descripcion = descripcion 
 		this.recompensa = recompensa 
 		this.minimaReputacionParaParticipar = minimaReputacionParaParticipar 
-		this.genero = genero
+		this.genero = genero as Genero
 		this.fechaCreacion = LocalDateTime.now()
     }
 

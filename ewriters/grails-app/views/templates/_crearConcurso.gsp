@@ -1,3 +1,5 @@
+<%@ page import="ewriters.Genero" %>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -13,13 +15,7 @@
           </div>
           <div class="form-group">
               <label for="fc-genero">Genero de las narraciones</label>
-              <select class="form-control" id="fc-genero">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              </select>
+              <g:select class="form-control" name="genero" from="${Genero.values()*.value}" id="fc-genero" />
           </div>
           <div class="form-group">
             <label for="fc-minRep">Minima reputacion para participar</label>

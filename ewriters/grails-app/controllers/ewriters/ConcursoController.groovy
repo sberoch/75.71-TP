@@ -24,16 +24,14 @@ class ConcursoController {
         ])
     }
 
-    def crear(
-        String titulo,
-        String descripcion,
-        Long recompensa,
-        Long minimaReputacionParaParticipar) {
-
-        //TODO: falta genero
+    def crear(String titulo,
+            String descripcion,
+            String genero,
+            Long recompensa,
+            Long minimaReputacionParaParticipar) {
 
         Concurso concurso = new Concurso(titulo, descripcion, recompensa, 
-                                    minimaReputacionParaParticipar, Narracion.Genero.TERROR)
+                                    minimaReputacionParaParticipar, genero)
         concursoService.crear(concurso, sesion.usuarioActivo)
         redirect action: "index"
             
@@ -45,7 +43,7 @@ class ConcursoController {
 
     def enviarNarracion(String titulo, String texto, Long id) {
         Concurso concurso = concursoService.get(id)
-        Narracion narracion = new Narracion(titulo, texto, concurso.genero)
+        Narracion narracion = new Narracion(titulo, texto, concurso.genero.toString())
         concursoService.enviarNarracion(narracion, concurso, sesion.usuarioActivo)
         redirect action: "show", id: id
     }
