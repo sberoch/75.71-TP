@@ -22,12 +22,19 @@ abstract class ConcursoService implements IConcursoService {
     
     @Transactional
     Narracion obtenerNarracionGanadora(Long id) {
-        def narracionesDelConcurso = Narracion.findAllByEspacio(Concurso.get(id))
+        Concurso concurso = Concurso.get(id)
+        if (!concurso) {
+            throw new IllegalStateException("Ocurrio un error con el concurso.")
+        }
+        def narracionesDelConcurso = Narracion.findAllByEspacio(concurso)
         return narracionesDelConcurso.max()
     }
 
     @Transactional
     void crear(Concurso concurso, Usuario creador) {
+        if (!usuario) {
+            throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
+        }
         creador.addToConcursos(concurso)
         concurso.comenzar()
         concurso.save(failOnError: true)
@@ -35,6 +42,12 @@ abstract class ConcursoService implements IConcursoService {
 
     @Transactional
     void enviarNarracion(Narracion narracion, Concurso concurso, Usuario escritor) {
+        if (!usuario) {
+            throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
+        }
+        if (!concurso) {
+            throw new IllegalStateException("Ocurrio un error con el concurso.")
+        }
         escritor.escribirNarracion(narracion, concurso)
         narracion.save(failOnError: true)
     }

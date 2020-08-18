@@ -9,7 +9,9 @@ class BootStrap {
 
         espacioPrincipal = new EspacioPrincipal()
         espacioPrincipal.save(failOnError: true)
-        sesion.usuarioActivo.save(failOnError: true)
+
+        Usuario usuario = new Usuario("Bob")
+        
 
         Narracion narracion = new Narracion(
             "Un titulo de prueba",
@@ -27,13 +29,16 @@ class BootStrap {
             "TERROR"
         )
 
-        sesion.usuarioActivo.escribirNarracion(narracion, espacioPrincipal)
-        sesion.usuarioActivo.escribirNarracion(narracion2, espacioPrincipal)
-        sesion.usuarioActivo.escribirNarracion(narracion3, espacioPrincipal)
+        usuario.escribirNarracion(narracion, espacioPrincipal)
+        usuario.escribirNarracion(narracion2, espacioPrincipal)
+        usuario.escribirNarracion(narracion3, espacioPrincipal)
+
+        Usuario usuarioGuardado = usuario.save(failOnError: true)
+        sesion.usuarioActivoId = usuarioGuardado.id
 
         narracion.save(failOnError: true)
         narracion2.save(failOnError: true)
-        narracion3.save(failOnError: true)
+        narracion3.save(failOnError: true)   
 
     }
     

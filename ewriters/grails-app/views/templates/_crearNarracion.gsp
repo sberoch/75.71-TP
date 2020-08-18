@@ -7,22 +7,22 @@
       <form class="mt-5" action="${action}">
           <div class="form-group">
             <label for="fc-titulo">Titulo</label>
-            <input type="text" name="titulo" class="form-control" id="fc-titulo" placeholder="Titulo de la narracion">
+            <input type="text" name="titulo" class="form-control" id="fc-titulo" placeholder="Titulo de la narracion" required>
           </div>
           <g:if test="${espacio != 'concurso'}">
             <div class="form-group">
               <label for="fc-genero">Genero</label>
-              <g:select class="form-control" name="genero" from="${Genero.values()*.value}" id="fc-genero" />
+              <g:select class="form-control" name="genero" from="${Genero.values()*.value}" id="fc-genero"/>
             </div>
           </g:if>
           <div class="form-group">
             <label for="fc-texto">Texto</label>
-            <textarea class="form-control" name="texto" id="fc-texto" rows="10"></textarea>
+            <textarea class="form-control" name="texto" id="fc-texto" rows="10" required></textarea>
           </div>
           <g:if test="${espacio == 'espacioPrincipal'}">
             <div class="form-group">
               <label for="fc-minRep">Minima reputacion para criticar</label>
-              <input type="number" class="form-control" name="minimaReputacionParaCritica" id="fc-minRep" placeholder="100">
+              <input type="number" class="form-control" name="minimaReputacionParaCritica" id="fc-minRep" placeholder="100" required>
             </div>
           </g:if>
           <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar</button>

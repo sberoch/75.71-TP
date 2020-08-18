@@ -29,30 +29,42 @@ abstract class TallerService implements ITallerService {
     @Transactional
     void agregarUsuario(Long tallerId, String nombre) {
         Taller taller = Taller.get(tallerId)
+        if (!taller) {
+            throw new IllegalStateException("Ocurrio un error con el taller.")
+        }
         Usuario usuario = Usuario.findByNombreApellido(nombre)
         if (usuario) {
             taller.agregarUsuario(usuario)
             taller.save(flush: true, failOnError: true)
         } else {
-            throw new IllegalStateException("No se encontro un usuario con ese nombre")
+            throw new IllegalStateException("No se encontro un usuario con ese nombre.")
         }
     }
 
     @Transactional
     void removerUsuario(Long tallerId, String nombre) {
         Taller taller = Taller.get(tallerId)
+        if (!taller) {
+            throw new IllegalStateException("Ocurrio un error con el taller.")
+        }
         Usuario usuario = Usuario.findByNombreApellido(nombre)
         if (usuario) {
             taller.removerUsuario(usuario)
             taller.save(flush: true, failOnError: true)
         } else {
-            throw new IllegalStateException("No se encontro un usuario con ese nombre")
+            throw new IllegalStateException("No se encontro un usuario con ese nombre.")
         }
     }
 
     @Transactional
     void agregarNarracion(Long tallerId, Narracion narracion, Usuario escritor) {
         Taller taller = Taller.get(tallerId)
+        if (!taller) {
+            throw new IllegalStateException("Ocurrio un error con el taller.")
+        }
+        if (!usuario) {
+            throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
+        }
         escritor.escribirNarracion(narracion, taller)
         narracion.save(flush: true, failOnError: true)
     }

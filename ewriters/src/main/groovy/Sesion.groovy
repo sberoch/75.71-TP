@@ -2,5 +2,10 @@
 package ewriters
 
 class Sesion {
-    Usuario usuarioActivo
+
+    Long usuarioActivoId
+
+    Usuario getUsuarioActivo() {
+        return Usuario.get(usuarioActivoId)
+    }
 }

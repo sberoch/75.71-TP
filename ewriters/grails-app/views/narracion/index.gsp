@@ -8,15 +8,26 @@
     <body>
         <div id="list-narracion" class="content scaffold-list" role="main">
             <g:if test="${flash.message}">
-                <div class="message" role="status">${flash.message}</div>
+                <div class="container mt-4" role="status">
+                    <div class="alert alert-danger" role="alert">
+                        ${flash.message}
+                    </div>
+                </div>
             </g:if>
             <div class="container">
-                <h6 class="mt-5">Ordenar por...</h6>
-                <form action="/">
-                    <g:select class="form-control w-25" name="ordenamiento" from="${['Popularidad', 'Fecha de publicacion', 'Nombre']}"
-                    valueMessagePrefix="ordenamiento" onchange="javascript:this.form.submit()"
-                    noSelection="['':'-Seleccionar-']" />
-                </form>
+                <div class="row mt-5">
+                    <div class="col">
+                        <h6>Ordenar por...</h6>
+                        <form action="/">
+                            <g:select class="form-control w-50" name="ordenamiento" from="${['Popularidad', 'Fecha de publicacion', 'Nombre']}"
+                            valueMessagePrefix="ordenamiento" onchange="javascript:this.form.submit()"
+                            noSelection="['':'-Seleccionar-']" />
+                        </form>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-right mt-4">Tu reputacion - ${reputacion}</h4>
+                    </div>
+                </div>  
             </div>
             <g:render template="/templates/narracionEnLista" var="narracion" collection="${narracionList}" />
         </div>

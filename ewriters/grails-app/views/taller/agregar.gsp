@@ -8,7 +8,11 @@
     <body>
         <div id="agregar-usuario" class="content scaffold-create" role="main">
             <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+                <div class="container mt-4" role="status">
+                    <div class="alert alert-danger" role="alert">
+                        ${flash.message}
+                    </div>
+                </div>
             </g:if>
             <div class="container">
               <h3 class="mt-5">Agregar un usuario</h3>

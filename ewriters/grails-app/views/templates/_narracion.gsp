@@ -6,11 +6,16 @@
       <p class="card-text">${narracion?.texto}</p>
       <div class="container">
         <div class="row">
-            <div class="col-xs-6 mr-1">
+            <div class="col-xs-1">
                 <a href="/narracion/meGusta/${narracion?.id}" class="btn-floating btn-lg btn-default"><i class="fa fa-heart"></i></a>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-1">
                 <p class="pt-1">${narracion?.cantMeGusta}</p>
+            </div>
+            <div class="col">
+              <g:if test="${ narracion?.minimaReputacionParaCritica != 0 }">
+                <h5 class="text-right">Necesitas ${narracion?.minimaReputacionParaCritica} puntos para criticar.</h5>
+              </g:if>
             </div>
         </div>
       </div>
@@ -43,7 +48,7 @@
         </div>
         <div class="container mt-3">
           <div class="input-group-append">
-            <input id="comentario" type="text" name="texto" class="form-control" placeholder="Agregar un comentario" aria-label="Agregar un comentario" aria-describedby="basic-addon2">
+            <input id="comentario" type="text" name="texto" class="form-control" placeholder="Agregar un comentario" aria-label="Agregar un comentario" aria-describedby="basic-addon2" required>
             <button class="btn btn-outline-secondary" type="submit">Enviar</button>
           </div>
         </div>    

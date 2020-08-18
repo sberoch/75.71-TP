@@ -18,25 +18,44 @@ class TallerController {
     }
 
     def crear(String titulo) {
-        Taller taller = new Taller(titulo)
-        tallerService.crearTaller(taller, sesion.usuarioActivo)
+        try {
+            Taller taller = new Taller(titulo)
+            tallerService.crearTaller(taller, sesion.getUsuarioActivo())
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "index"
     }
 
     def agregarUsuario(String nombre, Long id) {
-        tallerService.agregarUsuario(id, nombre)
-        redirect action: "show", id: id
+        try {
+            tallerService.agregarUsuario(id, nombre)
+            redirect action: "show", id: id
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+            redirect action: "agregar", id: id
+        }
     }
 
     def removerUsuario(String nombre, Long id) {
-        tallerService.removerUsuario(id, nombre)
-        redirect action: "show", id: id
+        try {
+            tallerService.removerUsuario(id, nombre)
+            redirect action: "show", id: id
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+            redirect action: "remover", id: id
+        }
     }
 
     def agregarNarracion(String titulo, String texto, String genero, Long id) {
-        Narracion narracion = new Narracion(titulo, texto, genero)
-        tallerService.agregarNarracion(id, narracion, sesion.usuarioActivo)
-        redirect action: "show", id: id
+        try {
+            Narracion narracion = new Narracion(titulo, texto, genero)
+            tallerService.agregarNarracion(id, narracion, sesion.getUsuarioActivo())
+            redirect action: "show", id: id
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+            redirect action: "escribir", id: id
+        } 
     }
 
     def create() {

@@ -12,14 +12,18 @@ class NarracionController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond narracionService.list(params), model:[narracionCount: narracionService.count()]
+        respond narracionService.list(params), model:[
+            narracionCount: narracionService.count(),
+            reputacion: sesion.getUsuarioActivo().reputacion
+        ]
     }
 
     def search() {
         List<Narracion> results = narracionService.search(params)
         render(view: "index", model: [
             narracionList: results,
-            narracionCount: results.size()
+            narracionCount: results.size(),
+            reputacion: sesion.getUsuarioActivo().reputacion
         ])
     }
 
@@ -37,38 +41,48 @@ class NarracionController {
         String genero,
         Long minimaReputacionParaCritica) {
 
-        Narracion narracion = new Narracion(titulo, texto, genero, minimaReputacionParaCritica)
-        narracionService.crear(narracion, sesion.usuarioActivo)
+        try {
+            Narracion narracion = new Narracion(titulo, texto, genero, minimaReputacionParaCritica)
+            narracionService.crear(narracion, sesion.getUsuarioActivo())
+        } catch(IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "index"
     }
 
     def meGusta(Long id) {
-        narracionService.meGusta(id, sesion.usuarioActivo)
+        try {
+            narracionService.meGusta(id, sesion.getUsuarioActivo())
+        } catch(IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "show", id: id
     }
     
     def comentar(String texto, String seccionCriticada, Long id) {
-        def comentario = new Comentario(texto, seccionCriticada)
-        narracionService.agregarComentario(comentario, id, sesion.usuarioActivo)
+        try {
+            def comentario = new Comentario(texto, seccionCriticada)
+            narracionService.agregarComentario(comentario, id, sesion.getUsuarioActivo())
+        } catch(IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "show", id: id
     }
 
     def responder(String respuesta, Long narracionId, Long id) {
-        narracionService.responder(respuesta, id, sesion.usuarioActivo)
+        try {
+            narracionService.responder(respuesta, id, sesion.getUsuarioActivo())
+        } catch(IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "show", id: narracionId
     }
-
-
-
-
 
     def create() {
         respond new Narracion(params)
     }
 
     def save(Narracion narracion) {
-        narracion.popularidad = 0
-        narracion.cantMeGusta = 0
         if (narracion == null) {
             notFound()
             return

@@ -30,9 +30,13 @@ class ConcursoController {
             Long recompensa,
             Long minimaReputacionParaParticipar) {
 
-        Concurso concurso = new Concurso(titulo, descripcion, recompensa, 
+        try {
+            Concurso concurso = new Concurso(titulo, descripcion, recompensa, 
                                     minimaReputacionParaParticipar, genero)
-        concursoService.crear(concurso, sesion.usuarioActivo)
+            concursoService.crear(concurso, sesion.getUsuarioActivo())
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "index"
             
     }
@@ -42,15 +46,24 @@ class ConcursoController {
     }
 
     def enviarNarracion(String titulo, String texto, Long id) {
-        Concurso concurso = concursoService.get(id)
-        Narracion narracion = new Narracion(titulo, texto, concurso.genero.toString())
-        concursoService.enviarNarracion(narracion, concurso, sesion.usuarioActivo)
+        try {
+            Concurso concurso = concursoService.get(id)
+            Narracion narracion = new Narracion(titulo, texto, concurso.genero.toString())
+            concursoService.enviarNarracion(narracion, concurso, sesion.getUsuarioActivo())
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+        }
         redirect action: "show", id: id
     }
 
     def mostrarGanador(Long id) {
-        Narracion ganadora = concursoService.obtenerNarracionGanadora(id)
-        redirect controller: "narracion", action: "show", id: ganadora.id
+        try {
+            Narracion ganadora = concursoService.obtenerNarracionGanadora(id)
+            redirect controller: "narracion", action: "show", id: ganadora.id
+        } catch (IllegalStateException e) {
+            flash.message = e.message
+            redirect action: "index"
+        }  
     }
 
     def create() {

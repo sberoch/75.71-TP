@@ -35,7 +35,6 @@ abstract class NarracionService implements INarracionService {
 			default:
 				return Narracion.findAllByEspacio(espacio, [sort: "popularidad", order: "desc"])
 		}
-		
 	}
 
 	@Transactional
@@ -47,6 +46,9 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	void crear(Narracion narracion, Usuario escritor) {
+		if (!escritor) {
+			throw new IllegalStateException("El usuario no existe")
+		}
 		EspacioPrincipal espacio = EspacioPrincipal.list()?.first()
 		escritor.escribirNarracion(narracion, espacio)
 		narracion.save(failOnError: true)
@@ -54,7 +56,13 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	def meGusta(Long narracionId, Usuario usuario) {
+		if (!usuario) {
+			throw new IllegalStateException("El usuario no existe")
+		}
 		def narracion = Narracion.get(narracionId)
+		if (!narracion) {
+			throw new IllegalStateException("No se encontro la narracion solicitada.")
+		}
 		MeGusta meGusta = MeGusta.find {
 			(usuario == usuario) &&
 			(narracion == narracion) 
@@ -64,6 +72,7 @@ abstract class NarracionService implements INarracionService {
 			narracion.removerMeGusta(meGusta)
 			meGusta.delete(flush: true)
 			narracion.save(flush: true, failOnError: true)
+
 		} else {
 			meGusta = new MeGusta(usuario)
 			narracion.agregarMeGusta(meGusta)
@@ -74,7 +83,13 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	def agregarComentario(Comentario comentario, Long narracionId, Usuario usuario) {
+		if (!usuario) {
+			throw new IllegalStateException("El usuario no existe")
+		}
 		def narracion = Narracion.get(narracionId)
+		if (!narracion) {
+			throw new IllegalStateException("No se encontro la narracion solicitada.")
+		}
 		usuario.addToComentarios(comentario)
 		narracion.agregarComentario(comentario)
 		narracion.save(flush: true, failOnError: true)
@@ -82,16 +97,27 @@ abstract class NarracionService implements INarracionService {
 
 	@Transactional
 	List<Comentario> listarComentarios(Long narracionId) {
-		return Comentario.findAllByNarracion(Narracion.get(narracionId))
+		def narracion = Narracion.get(narracionId)
+		if (!narracion) {
+			throw new IllegalStateException("No se encontro la narracion solicitada.")
+		}
+		return Comentario.findAllByNarracion(narracion)
 	}
 
 	@Transactional
-	Long contarMeGusta(Long id) {
-		return MeGusta.findAllByNarracion(Narracion.get(id)).size()
+	Long contarMeGusta(Long narracionId) {
+		def narracion = Narracion.get(narracionId)
+		if (!narracion) {
+			throw new IllegalStateException("No se encontro la narracion solicitada.")
+		}
+		return MeGusta.findAllByNarracion(narracion).size()
 	}
 
 	@Transactional
 	void responder(String respuesta, Long comentarioId, Usuario usuario) {
+		if (!usuario) {
+			throw new IllegalStateException("El usuario no existe")
+		}
 		def comentario = Comentario.get(comentarioId)
 		usuario.responderComentario(comentario, respuesta)
 		comentario.save(flush: true, failOnError: true)
