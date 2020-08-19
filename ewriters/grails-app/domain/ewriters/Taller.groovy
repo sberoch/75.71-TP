@@ -26,7 +26,7 @@ class Taller extends EspacioDePublicacion {
     }
 
     void removerUsuario(Usuario usuario) {
-        if (usuarios.contains(usuario)) {
+        if (usuarios?.contains(usuario)) {
             this.removeFromUsuarios(usuario)
         } else {
             throw new IllegalStateException("Este usuario no esta en el taller")
@@ -35,7 +35,7 @@ class Taller extends EspacioDePublicacion {
     }
 
     void agregarNarracion(Narracion narracion, Usuario escritor) {
-        if (usuarios.contains(escritor) || creador.equals(escritor)) {
+        if (usuarios?.contains(escritor) || creador.equals(escritor)) {
             this.addToNarraciones(narracion)
         } else {
             throw new IllegalStateException("Este usuario no esta en el taller")
