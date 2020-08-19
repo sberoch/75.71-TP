@@ -14,7 +14,7 @@ class NarracionController {
         params.max = Math.min(max ?: 10, 100)
         respond narracionService.list(params), model:[
             narracionCount: narracionService.count(),
-            reputacion: sesion.getUsuarioActivo().reputacion
+            usuarioActivo: sesion.getUsuarioActivo()
         ]
     }
 
@@ -23,15 +23,14 @@ class NarracionController {
         render(view: "index", model: [
             narracionList: results,
             narracionCount: results.size(),
-            reputacion: sesion.getUsuarioActivo().reputacion
+            usuarioActivo: sesion.getUsuarioActivo()
         ])
     }
 
     def show(Long id) {
         render(view: "show", model: [
-            narracion: narracionService.get(id), 
-            comentarios: narracionService.listarComentarios(id),
-            meGustaCount: narracionService.contarMeGusta(id)
+            narracion: narracionService.get(id),
+            usuarioActivo: sesion.getUsuarioActivo()
         ])
     }
 

@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div class="card w-auto h-auto mt-1 bg-light" style="width: 20rem;">
+  <div class="card w-auto h-auto mt-1 mb-5 bg-light" style="width: 20rem;">
     <div class="card-body">
       <h4 class="card-title">Comentarios</h4>
       <form class="input-group p-3" action="/narracion/comentar/${narracion?.id}">
@@ -35,9 +35,11 @@
                 var seccion = document.getElementById("seccionAComentar");
                 if (checkBox.checked == true){
                   seccion.disabled = false;
+                  seccion.required = true;
                 } else {
                   seccion.disabled = true;
                   seccion.value="";
+                  seccion.required = false;
                 }
               }
             </script>
@@ -53,7 +55,12 @@
           </div>
         </div>    
       </form>
-      <g:render template="/templates/comentario" var="comentario" collection="${narracion?.comentarios}" />
+      <g:if test="${ narracion?.escritor?.id == usuarioActivo?.id }">
+        <g:render template="/templates/comentarioVistoPorEscritor" var="comentario" collection="${narracion?.comentarios}" />   
+      </g:if>
+      <g:else>
+         <g:render template="/templates/comentario" var="comentario" collection="${narracion?.comentarios}" />
+      </g:else>    
     </div>
   </div>
 </div>

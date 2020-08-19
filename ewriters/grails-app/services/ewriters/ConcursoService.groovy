@@ -32,7 +32,7 @@ abstract class ConcursoService implements IConcursoService {
 
     @Transactional
     void crear(Concurso concurso, Usuario creador) {
-        if (!usuario) {
+        if (!creador) {
             throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
         }
         creador.addToConcursos(concurso)
@@ -42,7 +42,7 @@ abstract class ConcursoService implements IConcursoService {
 
     @Transactional
     void enviarNarracion(Narracion narracion, Concurso concurso, Usuario escritor) {
-        if (!usuario) {
+        if (!escritor) {
             throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
         }
         if (!concurso) {

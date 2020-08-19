@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </g:if>
-            <g:if test="${tallerList != null}">
+            <g:if test="${tallerList != null && tallerList.size() > 0}">
                 <div class="container">
                     <h2 class="mt-5">Actualmente participas de los siguientes talleres</h2>
                 </div>

@@ -5,15 +5,17 @@ class TallerController {
     TallerService tallerService
     def sesion
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond tallerService.list(params), model:[tallerCount: tallerService.count()]
+    def index() {
+        render view: "index", model:[
+            tallerList: tallerService.listar(sesion.getUsuarioActivo())
+        ] 
     }
 
     def show(Long id) {
         Taller taller = tallerService.get(id)
         render(view: "show", model:[
-            taller: taller
+            taller: taller,
+            usuarioActivo: sesion.getUsuarioActivo()
         ])
     }
 

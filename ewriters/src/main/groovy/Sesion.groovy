@@ -8,4 +8,11 @@ class Sesion {
     Usuario getUsuarioActivo() {
         return Usuario.get(usuarioActivoId)
     }
+
+    void cambiarUsuario(String nombre) {
+        Usuario usuario = Usuario.findByNombreApellido(nombre)
+        if (usuario) {
+            usuarioActivoId = usuario.id
+        }
+    }
 }

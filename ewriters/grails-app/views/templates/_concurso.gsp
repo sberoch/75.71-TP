@@ -23,4 +23,4 @@
      <h5 class="my-3">Narraciones participantes</h5>
   </g:if>
 </div>
-<g:render template="/templates/narracionEnLista" var="narracion" collection="${concurso?.narraciones}" />
+<g:render template="/templates/narracionEnLista" var="narracion" collection="${concurso?.narraciones.sort().reverse()}" />

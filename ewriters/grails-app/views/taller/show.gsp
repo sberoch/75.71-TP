@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </g:if>
-            <g:render template="/templates/taller" model="[taller: taller]" />
+            <g:render template="/templates/taller" model="[taller: taller, usuarioActivo: usuarioActivo]" />
         </div>
     </body>
 </html>

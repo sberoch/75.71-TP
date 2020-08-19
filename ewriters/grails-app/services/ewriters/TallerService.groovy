@@ -20,6 +20,16 @@ interface ITallerService {
 @Service(Taller)
 abstract class TallerService implements ITallerService {
 
+    
+    @Transactional
+    List<Taller> listar(Usuario usuario) {
+        List<Taller> talleres = Taller.list(sort: "titulo")
+        def talleresAMostrar = talleres.findAll {
+            it.creador.equals(usuario) || (it.usuarios && it.usuarios.contains(usuario))
+        }
+        return talleresAMostrar
+    }
+
     @Transactional
     void crearTaller(Taller taller, Usuario creador) {
         creador.addToTalleres(taller)
@@ -62,7 +72,7 @@ abstract class TallerService implements ITallerService {
         if (!taller) {
             throw new IllegalStateException("Ocurrio un error con el taller.")
         }
-        if (!usuario) {
+        if (!escritor) {
             throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
         }
         escritor.escribirNarracion(narracion, taller)

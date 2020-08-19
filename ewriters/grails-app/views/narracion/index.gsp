@@ -25,7 +25,8 @@
                         </form>
                     </div>
                     <div class="col">
-                        <h4 class="text-right mt-4">Tu reputacion - ${reputacion}</h4>
+                        <h5 class="text-right text-muted mt-3">${usuarioActivo?.nombreApellido}</h5>
+                        <h6 class="text-right mt-1">Tu reputacion - ${usuarioActivo?.reputacion}</h6>
                     </div>
                 </div>  
             </div>

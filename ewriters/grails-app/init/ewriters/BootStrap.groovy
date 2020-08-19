@@ -11,7 +11,8 @@ class BootStrap {
         espacioPrincipal.save(failOnError: true)
 
         Usuario usuario = new Usuario("Bob")
-        
+        Usuario usuario2 = new Usuario("Alice")
+        usuario2.save(failOnError: true)
 
         Narracion narracion = new Narracion(
             "Un titulo de prueba",
