@@ -1,24 +1,27 @@
 package ewriters
-
+import grails.testing.gorm.DataTest
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
+class UsuarioSpec extends Specification implements DomainUnitTest<Usuario>, DataTest {
+
+    EspacioPrincipal espacioPrincipal
 
     def setup() {
-    }
+        mockDomain EspacioPrincipal
 
-    def cleanup() {
+        espacioPrincipal = new EspacioPrincipal()
     }
 
     void "test escribir una narracion"() {
     	given: "un escritor"
     		def usuario = new Usuario("Alice")
     	when: "escriba una narracion"
-    		def narracion = usuario.escribirNarracion("Cuento de Alice",
+    		def narracion = new Narracion("Cuento de Alice",
     			"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    			Narracion.Genero.TERROR,
+    			"TERROR",
     			50)
+            usuario.escribirNarracion(narracion, espacioPrincipal)
     	then: "se le asigna esa narracion"
     		narracion == usuario.narraciones.find { it.titulo == "Cuento de Alice" }
     }
@@ -27,84 +30,92 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
     	given: "un creador de concursos"
     		def usuario = new Usuario("Bob")
     	when: "crea un concurso"
-    		def concurso = usuario.crearConcurso(
-    			"Concurso de Bob", 
+    		def concurso = new Concurso("Concurso de Bob", 
     			"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     			200,
     			50,
-    			Narracion.Genero.NO_FICCION)
+    			"NO_FICCION")
+            usuario.addToConcursos(concurso)
     	then: "se le asigna ese concurso"
     		usuario == concurso.creador
     }
 
-    void "test indicar me gusta en una historia exitosamente"() {
+    void "test crear un taller"() {
+        given: "un creador del taller"
+            def usuario = new Usuario("Alice")
+        when: "crea un taller"
+            def taller = new Taller("Taller de Alice")
+            usuario.addToTalleres(taller)
+        then: "se le asigna ese taller"
+            usuario == taller.creador
+    }
+
+    void "test indicar me gusta en una historia aumenta la reputacion del escritor"() {
         given: "una narracion y un lector que no dio me gusta previamente"
-            def narracion = new Narracion(
-                    new Usuario("Alice"),
-                    "Narracion de Alice",
+            def narracion = new Narracion("Narracion de Alice",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Narracion.Genero.CIENCIA_FICCION,
-                    60
+                    "CIENCIA_FICCION"
             )
+            def escritor = new Usuario("Alice")
+            escritor.escribirNarracion(narracion, espacioPrincipal)
             def lector = new Usuario("Bob")
         when: "el lector indique que le gusta la narracion"
-            lector.meGusta(narracion)
-        then: "se agregara el me gusta correctamente"
-            narracion.cantMeGusta == 1
-            lector.narracionesConMeGusta.contains(narracion)
+            MeGusta meGusta = new MeGusta(lector)
+            narracion.agregarMeGusta(meGusta)
+        then: "aumenta la reputacion del escritor"
+            escritor.reputacion == 1
     }
 
     void "test indicar me gusta en una historia donde ya se dio"() {
         given: "una narracion y un lector que le dio me gusta previamente"
-            def narracion = new Narracion(
-                    new Usuario("Alice"),
-                    "Narracion de Alice",
+            def narracion = new Narracion("Narracion de Alice",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Narracion.Genero.CIENCIA_FICCION,
-                    60
+                    "CIENCIA_FICCION"
             )
+            def escritor = new Usuario("Alice")
+            escritor.escribirNarracion(narracion, espacioPrincipal)
             def lector = new Usuario("Bob")
-            lector.meGusta(narracion)
+            MeGusta meGusta = new MeGusta(lector)
+            narracion.agregarMeGusta(meGusta)
         when: "el lector indique que le gusta la narracion"
-            lector.meGusta(narracion)
+            narracion.agregarMeGusta(meGusta)
         then: "ocurrira un error al intentarlo nuevamente"
-            narracion.cantMeGusta == 1
+            escritor.reputacion == 1
             def exception = thrown(IllegalStateException)
             exception != null
     }
 
     void "test quitar el me gusta de una narracion exitosamente"() {
     	given: "una narracion y un lector que le dio me gusta previamente"
-            def narracion = new Narracion(
-                    new Usuario("Alice"),
-                    "Narracion de Alice",
+           def narracion = new Narracion("Narracion de Alice",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Narracion.Genero.CIENCIA_FICCION,
-                    60
+                    "CIENCIA_FICCION"
             )
+            def escritor = new Usuario("Alice")
+            escritor.escribirNarracion(narracion, espacioPrincipal)
             def lector = new Usuario("Bob")
-            lector.meGusta(narracion)
+            MeGusta meGusta = new MeGusta(lector)
+            narracion.agregarMeGusta(meGusta)
         when: "el lector quite el me gusta"
-        	lector.removerMeGusta(narracion)
-        then: "ya no aparecera entre sus narraciones con me gusta"
-        	!lector.narracionesConMeGusta.contains(narracion)
-        	narracion.cantMeGusta == 0
+        	narracion.removerMeGusta(meGusta)
+        then: "disminuira la reputacion del escritor"
+        	escritor.reputacion == 0
     }
 
     void "test quitar el me gusta de una narracion a la que no le habia dado previamente"() {
     	given: "una narracion y un lector que no dio me gusta previamente"
-            def narracion = new Narracion(
-                    new Usuario("Alice"),
-                    "Narracion de Alice",
+            def narracion = new Narracion("Narracion de Alice",
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                    Narracion.Genero.CIENCIA_FICCION,
-                    60
+                    "CIENCIA_FICCION"
             )
+            def escritor = new Usuario("Alice")
+            escritor.escribirNarracion(narracion, espacioPrincipal)
             def lector = new Usuario("Bob")
         when: "el lector quite el me gusta"
-        	lector.removerMeGusta(narracion)
-        then: "ya no aparecera entre sus narraciones con me gusta"
-        	narracion.cantMeGusta == 0
+        	MeGusta meGusta = new MeGusta(lector)
+            narracion.removerMeGusta(meGusta)
+        then: "no disminuria la reputacion del escritor"
+        	escritor.reputacion == 0
         	def exception = thrown(IllegalStateException)
             exception != null
     }
@@ -112,18 +123,16 @@ class UsuarioSpec extends Specification implements DomainUnitTest<Usuario> {
     void "test ganar un concurso le otorga premios al usuario ganador"() {
         given: "un concurso, un escritor y su narracion"
             def recompensaPorGanarElConcurso = 200
-            def concurso = new Concurso(new Usuario("Alice"),
-                "Concurso de Alice",
+            def concurso = new Concurso("Concurso de Alice",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 recompensaPorGanarElConcurso,
                 0,
-                Narracion.Genero.FANTASIA)
+                "FANTASIA")
             def participante = new Usuario("Bob")
-            def narracion = new Narracion(participante,
-                "Narracion de Bob",
+            def narracion = new Narracion("Narracion de Bob",
                 "Lorem ipsum dolor sit amet",
-                Narracion.Genero.FANTASIA)
-            participante.participarEnConcurso(narracion, concurso)
+                "FANTASIA")
+            participante.escribirNarracion(narracion, concurso)
             def reputacionPrevia = participante.reputacion
         when: "el escritor gane el concurso"
             concurso.finalizar()

@@ -67,7 +67,7 @@ class Narracion implements Comparable {
 	}
 
 	void removerMeGusta(MeGusta meGusta) {
-		if (listaMeGusta.contains(meGusta)) {
+		if (listaMeGusta?.contains(meGusta)) {
 			this.removeFromListaMeGusta(meGusta)
 			cantMeGusta--
 			popularidad--

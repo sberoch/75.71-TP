@@ -2,6 +2,8 @@ package ewriters
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
+import java.time.*
+
 
 class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
 
@@ -19,12 +21,12 @@ class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
         		"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         		200,
         		50,
-        		Narracion.Genero.FANTASIA)
+        		"FANTASIA")
         when: "un usuario quiera participar con los requerimientos minimos"
         	usuario.reputacion = 100
         	def narracion = new Narracion("Narracion de Bob",
         		"Lorem ipsum dolor sit amet",
-        		Narracion.Genero.FANTASIA)
+        		"FANTASIA")
         	concurso.agregarNarracion(narracion, usuario)
         then: "se agregara exitosamente la narracion"
         	concurso.narraciones.contains(narracion)
@@ -37,14 +39,15 @@ class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
         		"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         		200,
         		50,
-        		Narracion.Genero.FANTASIA)
+        		"FANTASIA")
         when: "se quiera participar sin los requerimientos minimos"
         	usuario.reputacion = 25
         	def narracion = new Narracion("Narracion de Bob",
         		"Lorem ipsum dolor sit amet",
-        		Narracion.Genero.TERROR)
+        		"TERROR")
         	concurso.agregarNarracion(narracion, usuario)
         then: "no se podra participar con esa narracion"
+            !concurso.narraciones
         	def exception = thrown(IllegalStateException)
         	exception != null 
     }
@@ -55,10 +58,14 @@ class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 200,
                 50,
-                Narracion.Genero.FANTASIA)
+                "FANTASIA")
         expect: "el concurso no termino si paso menos de una semana"
             !concurso.terminado()
 
+        when: "paso una semana"
+            concurso.fechaCreacion = LocalDateTime.now().minusDays(7)
+        then: "el concurso termino"
+            concurso.terminado()
     }
 
     void "test la narracion con mas me gusta gana el concurso"() {
@@ -68,13 +75,13 @@ class ConcursoSpec extends Specification implements DomainUnitTest<Concurso> {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                 200,
                 0,
-                Narracion.Genero.FANTASIA)
+                "FANTASIA")
             def narracion_1 = new Narracion("Narracion de Bob",
                 "Lorem ipsum dolor sit amet",
-                Narracion.Genero.FANTASIA)
+                "FANTASIA")
             def narracion_2 = new Narracion("Narracion de Charlie",
                 "Lorem ipsum dolor sit amet",
-                Narracion.Genero.FANTASIA)
+                "FANTASIA")
             narracion_1.escritor = usuario
             narracion_2.escritor = otroUsuario
             concurso.agregarNarracion(narracion_1, usuario)

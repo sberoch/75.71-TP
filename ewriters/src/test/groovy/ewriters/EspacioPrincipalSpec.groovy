@@ -16,7 +16,7 @@ class EspacioPrincipalSpec extends Specification implements DomainUnitTest<Espac
         when:"el escritor agrega una narracion"
             Narracion narracion = new Narracion("Narracion de Bob",
                 "Texto de la narracion",
-                Narracion.Genero.NO_FICCION
+                "NO_FICCION"
             )
             espacioPrincipal.agregarNarracion(narracion, escritor)
         then:"la narracion se agrega al espacio principal"
