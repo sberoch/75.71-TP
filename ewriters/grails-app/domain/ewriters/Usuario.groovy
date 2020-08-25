@@ -26,15 +26,15 @@ class Usuario {
     }
 
     String toString() {
-        return nombreApellido
+        nombreApellido
     }
 
     boolean equals(other) {
-        return this.nombreApellido == other.nombreApellido
+        this.nombreApellido == other.nombreApellido 
     }
 
     int hashCode() {
-        return Objects.hash(nombreApellido, reputacion)
+        Objects.hash(nombreApellido)
     }
 
     void escribirNarracion(Narracion narracion, EspacioDePublicacion espacioDePublicacion) {
@@ -42,20 +42,18 @@ class Usuario {
         this.addToNarraciones(narracion)
     }
 
-    Concurso crearConcurso(String titulo,
-        String descripcion, 
-        Long recompensa, 
-        Long minimaReputacionParaParticipar, 
-        Genero genero) {
-        return new Concurso(this, titulo, descripcion, recompensa, minimaReputacionParaParticipar, genero)
-    }
-
     void ganarConcurso(Long recompensa) {
         this.reputacion += recompensa
     }
 
     void responderComentario(Comentario comentario, String respuesta) {
-        if (comentario.narracion.escritor.equals(this)) {
+        if (comentario.narracion.escritor != this) {
+            throw new IllegalStateException("Solo puede responder comentarios el autor de la narracion.")
+
+        } else if (comentario.respuesta != null) {
+            throw new IllegalStateException("Ya habia una respuesta para este comentario")
+
+        } else {
             comentario.respuesta = respuesta
             reputacion++
             comentario.narracion.popularidad++

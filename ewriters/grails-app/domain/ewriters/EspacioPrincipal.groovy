@@ -10,8 +10,4 @@ class EspacioPrincipal extends EspacioDePublicacion {
     void agregarNarracion(Narracion narracion, Usuario escritor) {
         this.addToNarraciones(narracion)
     }
-
-    String toString() {
-        return "Espacio Principal"
-    }
 }

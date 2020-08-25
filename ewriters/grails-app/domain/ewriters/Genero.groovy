@@ -17,7 +17,7 @@ enum Genero {
     }
 
     String getValue() {
-        return this.value
+        this.value
     }
 
     String toString(){

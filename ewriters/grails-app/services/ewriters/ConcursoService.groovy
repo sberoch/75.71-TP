@@ -27,7 +27,7 @@ abstract class ConcursoService implements IConcursoService {
             throw new IllegalStateException("Ocurrio un error con el concurso.")
         }
         def narracionesDelConcurso = Narracion.findAllByEspacio(concurso)
-        return narracionesDelConcurso.max()
+        narracionesDelConcurso.max()
     }
 
     @Transactional
@@ -37,7 +37,6 @@ abstract class ConcursoService implements IConcursoService {
         }
         creador.addToConcursos(concurso)
         concurso.comenzar()
-        concurso.save(failOnError: true)
     }
 
     @Transactional
@@ -49,6 +48,5 @@ abstract class ConcursoService implements IConcursoService {
             throw new IllegalStateException("Ocurrio un error con el concurso.")
         }
         escritor.escribirNarracion(narracion, concurso)
-        narracion.save(failOnError: true)
     }
 }

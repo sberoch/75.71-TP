@@ -38,11 +38,11 @@ class Narracion implements Comparable {
     }
 
     String toString() {
-    	return titulo
+    	titulo
     }
 
     int compareTo(other) {
-    	return this.cantMeGusta <=> other.cantMeGusta
+    	this.cantMeGusta <=> other.cantMeGusta
     }
 
 	void agregarComentario(Comentario comentario) {

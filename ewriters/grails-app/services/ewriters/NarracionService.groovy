@@ -41,7 +41,7 @@ abstract class NarracionService implements INarracionService {
 	List<Narracion> search(Map args) {
 		//Devuelve todas las narraciones con args.query en alguna parte del titulo 
 		String query = "%" + args.query + "%"
-		return Narracion.findAllByTituloIlike(query)
+		Narracion.findAllByTituloIlike(query)
 	}
 
 	@Transactional
@@ -51,7 +51,6 @@ abstract class NarracionService implements INarracionService {
 		}
 		EspacioPrincipal espacio = EspacioPrincipal.list()?.first()
 		escritor.escribirNarracion(narracion, espacio)
-		narracion.save(failOnError: true)
 	}
 
 	@Transactional
@@ -70,14 +69,11 @@ abstract class NarracionService implements INarracionService {
 
 		if (meGusta) {
 			narracion.removerMeGusta(meGusta)
-			meGusta.delete(flush: true)
-			narracion.save(flush: true, failOnError: true)
+			meGusta.delete()
 
 		} else {
 			meGusta = new MeGusta(usuario)
 			narracion.agregarMeGusta(meGusta)
-			narracion.save(flush: true, failOnError: true)
-			meGusta.save(flush: true, failOnError: true)
 		}
 	}
 
@@ -92,7 +88,6 @@ abstract class NarracionService implements INarracionService {
 		}
 		usuario.addToComentarios(comentario)
 		narracion.agregarComentario(comentario)
-		narracion.save(flush: true, failOnError: true)
 	}
 
 	@Transactional
@@ -101,7 +96,7 @@ abstract class NarracionService implements INarracionService {
 		if (!narracion) {
 			throw new IllegalStateException("No se encontro la narracion solicitada.")
 		}
-		return Comentario.findAllByNarracion(narracion)
+		Comentario.findAllByNarracion(narracion)
 	}
 
 	@Transactional
@@ -110,7 +105,7 @@ abstract class NarracionService implements INarracionService {
 		if (!narracion) {
 			throw new IllegalStateException("No se encontro la narracion solicitada.")
 		}
-		return MeGusta.findAllByNarracion(narracion).size()
+		MeGusta.findAllByNarracion(narracion).size()
 	}
 
 	@Transactional
@@ -120,7 +115,6 @@ abstract class NarracionService implements INarracionService {
 		}
 		def comentario = Comentario.get(comentarioId)
 		usuario.responderComentario(comentario, respuesta)
-		comentario.save(flush: true, failOnError: true)
 	}
 
 }

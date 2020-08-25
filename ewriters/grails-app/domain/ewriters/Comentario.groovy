@@ -19,6 +19,6 @@ class Comentario {
     }
 
     String toString() {
-        return texto
+        texto
     }
 }

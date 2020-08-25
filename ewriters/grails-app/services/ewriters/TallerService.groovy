@@ -25,15 +25,14 @@ abstract class TallerService implements ITallerService {
     List<Taller> listar(Usuario usuario) {
         List<Taller> talleres = Taller.list(sort: "titulo")
         def talleresAMostrar = talleres.findAll {
-            it.creador.equals(usuario) || (it.usuarios && it.usuarios.contains(usuario))
+            it.creador.equals(usuario) || (it.usuarios?.contains(usuario))
         }
-        return talleresAMostrar
+        talleresAMostrar
     }
 
     @Transactional
     void crearTaller(Taller taller, Usuario creador) {
         creador.addToTalleres(taller)
-        taller.save(failOnError: true)
     }
 
     @Transactional
@@ -45,7 +44,6 @@ abstract class TallerService implements ITallerService {
         Usuario usuario = Usuario.findByNombreApellido(nombre)
         if (usuario) {
             taller.agregarUsuario(usuario)
-            taller.save(flush: true, failOnError: true)
         } else {
             throw new IllegalStateException("No se encontro un usuario con ese nombre.")
         }
@@ -60,7 +58,6 @@ abstract class TallerService implements ITallerService {
         Usuario usuario = Usuario.findByNombreApellido(nombre)
         if (usuario) {
             taller.removerUsuario(usuario)
-            taller.save(flush: true, failOnError: true)
         } else {
             throw new IllegalStateException("No se encontro un usuario con ese nombre.")
         }
@@ -76,6 +73,5 @@ abstract class TallerService implements ITallerService {
             throw new IllegalStateException("Ocurrio un error con el usuario conectado.")
         }
         escritor.escribirNarracion(narracion, taller)
-        narracion.save(flush: true, failOnError: true)
     }
 }

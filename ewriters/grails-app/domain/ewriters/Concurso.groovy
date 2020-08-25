@@ -35,7 +35,7 @@ class Concurso extends EspacioDePublicacion {
     }
 
     String toString() {
-        return titulo
+        titulo
     }
 
     void comenzar() {
@@ -62,6 +62,6 @@ class Concurso extends EspacioDePublicacion {
     }
 
     boolean terminado() {
-        return fechaCreacion.plusDays(7) < LocalDateTime.now()
+        fechaCreacion.plusDays(7) < LocalDateTime.now()
     }
 }
